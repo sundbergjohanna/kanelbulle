@@ -15,7 +15,7 @@ echo "*Entering /cloudnaca "
 apt-get update
 apt-get -y install gmsh
 apt install python-numpy
- 
+sed -i '\/Applications\/Gmsh.app\/Contents\/MacOS\/gmsh/c\GMSHBIN=\"\/usr\/bin\/gmsh\"' runme.sh
 
 # ARGUMENTS to runme.sh
 # angle_start : smallest anglemof attack (degrees)
