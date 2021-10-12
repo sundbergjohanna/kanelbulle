@@ -19,9 +19,9 @@ def run_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
         try:
                 print("$ ./runme.sh", ang_0, ang_1, n_ang, n_nodes, n_lvl)
                 print("Loading...")
-                subprocess.check_call(["./run.sh", ang_0, ang_1, n_ang, n_nodes, n_lvl])
+                subprocess.check_call(["./runme.sh", ang_0, ang_1, n_ang, n_nodes, n_lvl])
         except subprocess.CalledProcessError:
-                print("Oops: ./run.sh could not finish")
+                print("Oops: ./runme.sh could not finish")
                 return False
         except:
                 print("Unexpected error:", sys.exc_info()[0])
@@ -30,10 +30,9 @@ def run_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
         return True
 
 
-start = str(0);     stop = str(10);     nr = str(2);        nodes = str(50)
-refine_levels = str(3)
+start = str(0);     stop = str(10);     nr = str(2);        nodes = str(50);    refine_levels = str(1)
 
 if run_script(start, stop, nr, nodes, refine_levels):
-        print("Data generated")
+        print("*** Data generated ***")
 else:
-        print("Failed: Data not generated")
+        print("*** Failed ://// ***")
