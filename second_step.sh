@@ -11,8 +11,6 @@ cmake .
 make -j 2
 cd ..
 cd cloudnaca
-mkdir msh
-mkdir geo
 echo "*Entering /cloudnaca "
 apt-get update
 apt-get -y install gmsh
