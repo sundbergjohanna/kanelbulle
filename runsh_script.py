@@ -39,6 +39,5 @@ start = str(0);     stop = str(10);     nr = str(2);        nodes = str(50);    
 
 if run_script(start, stop, nr, nodes, refine_levels):
         print("*** Data generated :))) ***"
-        
 else:
         print("*** Failed ://// ***")
