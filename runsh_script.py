@@ -17,7 +17,7 @@ def run_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
         os.chdir(script_dir)
 
         try:
-                print("$ ./run.sh", ang_0, ang_1, n_ang, n_nodes, n_lvl)
+                print("$ ./runme.sh", ang_0, ang_1, n_ang, n_nodes, n_lvl)
                 print("Loading...")
                 subprocess.check_call(["./run.sh", ang_0, ang_1, n_ang, n_nodes, n_lvl])
         except subprocess.CalledProcessError:
