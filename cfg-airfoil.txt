@@ -1,0 +1,34 @@
+#cloud-config
+
+apt_update: true
+apt_upgrade: true
+packages:
+ - python3-pip
+ - python3-dev
+ - build-essential
+ - tmux
+ - rabbitmq-server
+ - python-celery-common
+byobu_default: system
+
+write_files:
+  - path: /home/ubuntu/.tmux.conf
+    content: |
+      set -g mouse on
+  - path: /home/ubuntu/welcome.txt
+    content: |
+      Welcome to my VM.
+
+runcmd:
+ - pip3 install flask
+ - pip3 install celery
+ - pip3 install flower
+ - cd /home
+ - sudo chown ubuntu:ubuntu ubuntu
+ - cd /home/ubuntu
+ - git clone https://github.com/sundbergjohanna/kanelbulle.git
+ - sudo chown ubuntu:ubuntu kanelbulle/
+ - cd kanelbulle/
+ - chmod +x first_step.sh
+ - chmod +x second_step.sh
+ - ./first_step.sh
