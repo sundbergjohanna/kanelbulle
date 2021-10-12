@@ -11,8 +11,8 @@ cd msh
 for f in *.msh; do
     dolfin-convert "$f" "${f%.*}.xml"
 done
-echo "*** Moving files ***"
+echo "*** Converted to xml ***"
 for x in *.msh; do
      rm "$x"
 done
-echo "*** Deleting all msh ***"
+echo "*** Deleted all msh ***"
