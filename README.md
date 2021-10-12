@@ -1,2 +1,2 @@
 # kanelbulle
-Very col project
+Very cool project
