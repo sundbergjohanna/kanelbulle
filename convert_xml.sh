@@ -1,8 +1,8 @@
 
 #!/bin/bash
 
-# Usage: ./convert_to_xml.sh <directory where .msh is located>
-# eg: /home/ubuntu/murtazo/cloudnaca/msh
+# Run from parent directory in kanelbullen
+# Before running: chmod +x convert_xml.sh
 
 cd murtazo
 cd cloudnaca
