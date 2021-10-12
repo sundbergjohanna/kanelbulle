@@ -4,8 +4,8 @@
 # Usage: ./convert_to_xml.sh <directory where .msh is located>
 # eg: /home/ubuntu/murtazo/cloudnaca/msh
 
+cd murtazo
 cd cloudnaca
-#echo pwd
 cd msh
 
 for f in *.msh; do
