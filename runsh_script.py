@@ -22,10 +22,11 @@ def run_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
                 print("$ ./runme.sh", ang_0, ang_1, n_ang, n_nodes, n_lvl)
                 print("Loading...")
                 subprocess.check_call(["./runme.sh", ang_0, ang_1, n_ang, n_nodes, n_lvl])
-                os.system(cwd)
+                os.chdir(cwd)
                 os.system("ls -l")
-                os.system("cd ..")
-                os.system("ls -l")
+                os.system("chmod +x convert_xml.sh")
+                os.system("./convert_xml.sh")
+
                 
                 
                 
