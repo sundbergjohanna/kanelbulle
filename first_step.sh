@@ -18,5 +18,5 @@ echo "*Docker created: "
 sudo docker ps
 sudo docker cp murtazo airfoil_container:/home/fenics/shared/.
 sudo docker cp second_step.sh airfoil_container:/home/fenics/shared/.
-sudo docker exec -t -i airfoil_container bash -c "./second_step.sh"
+sudo docker exec airfoil_container bash -c "./second_step.sh"
 echo "*Executing second script "
