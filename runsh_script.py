@@ -10,7 +10,7 @@ import os
 import subprocess
 import sys
 
-script_dir = "murtazo/cloudnaca"
+script_dir = "murtazo/cloudnaca
 
 def run_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
         
@@ -20,6 +20,7 @@ def run_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
                 print("$ ./runme.sh", ang_0, ang_1, n_ang, n_nodes, n_lvl)
                 print("Loading...")
                 subprocess.check_call(["./runme.sh", ang_0, ang_1, n_ang, n_nodes, n_lvl])
+                
         except subprocess.CalledProcessError:
                 print("Oops: ./runme.sh could not finish")
                 return False
@@ -33,6 +34,8 @@ def run_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
 start = str(0);     stop = str(10);     nr = str(2);        nodes = str(50);    refine_levels = str(1)
 
 if run_script(start, stop, nr, nodes, refine_levels):
-        print("*** Data generated :))) ***")
+        print("*** Data generated :))) ***"
+        subprocess.check_call(["./convert_xml.sh"])
+        
 else:
         print("*** Failed ://// ***")
