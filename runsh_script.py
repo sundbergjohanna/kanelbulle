@@ -16,13 +16,18 @@ def run_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
         cwd = os.getcwd()
         print(cwd)
         os.chdir(script_dir)
+        os.system("ls -l")
 
         try:
                 print("$ ./runme.sh", ang_0, ang_1, n_ang, n_nodes, n_lvl)
                 print("Loading...")
                 subprocess.check_call(["./runme.sh", ang_0, ang_1, n_ang, n_nodes, n_lvl])
-                os.chdir(cwd)
-                subprocess.call(["./convert_xml.sh"])
+                os.system(cwd)
+                os.system("ls -l")
+                os.system("cd ..")
+                os.system("ls -l")
+                
+                
                 
         except subprocess.CalledProcessError:
                 print("Oops: ./runme.sh could not finish")
