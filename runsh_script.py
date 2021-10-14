@@ -73,7 +73,6 @@ def retrieve_results(meshfile):
 def run_airfoil_all(sample, nu, velocity, endtime, directory):
         cwd = os.getcwd()
         print(cwd)
-        os.chdir(airfoil_dir)
         
         all_files = os.listdir(directory)
         print(all_files)
@@ -108,5 +107,5 @@ else:
         
 """
 
-run_airfoil_all(s, nu, speed, T, '/murtazo/cloudnaca/msh/'):
+run_airfoil_all(s, nu, speed, T, '/murtazo/cloudnaca/msh'):
 
