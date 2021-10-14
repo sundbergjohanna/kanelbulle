@@ -12,7 +12,6 @@ import sys
 
 script_dir = "murtazo/cloudnaca"
 airfoil_dir = "murtazo/navier_stokes_solver"
-msh_dir = "../cloudnaca/msh/"
 
 def run_mesh_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
         #Input as strings:
@@ -44,6 +43,7 @@ def run_airfoil(sample, nu, velocity, endtime, meshfile):
         print(cwd)
         os.chdir(airfoil_dir)
         print('meshfile =', meshfile)
+        msh_dir = "../cloudnaca/msh/"
         print('msh_dir + mesfile=', msh_dir + meshfile)
         
         try:
@@ -62,22 +62,38 @@ def retrieve_results(meshfile):
         os.chdir(airfoil_dir)
         try: 
                 os.mkdir('res_' + meshfile)
-                os.system('ls -l')
                 os.chdir('results')
-                os.system('ls')
                 os.system('mv drag_ligt.m ../res_' + meshfile)
                 os.chdir(cwd)
         except:
                 print("Unexpected error:", sys.exc_info()[0])
                 return False
         return True  
+
+def run_airfoil_all(sample, nu, velocity, endtime, directory):
+        cwd = os.getcwd()
+        print(cwd)
+        os.chdir(airfoil_dir)
+        
+        all_files = os.listdir(directory)
+        print(all_files)
+        
+        for file in all_files:
+                print(file)
+                run_airfoil(sample, nu, velocity, endtime, file)
+                retrieve_results(file)
+                
+                
+        
+        
+
   
 #MESH INPUT
 start = '0';     stop = '10';     nr = '2';        nodes = '50';    refine_levels = '1'
 #AIRFOIL INOUT
 s = '10';      nu = '0.01';       speed = '10.';     T = '1';        file = 'r0a0n50.xml'  
 
-
+"""
 if run_mesh_script(start, stop, nr, nodes, refine_levels):
         print("*** Data generated :))) ***")
         
@@ -90,4 +106,7 @@ if run_mesh_script(start, stop, nr, nodes, refine_levels):
 else:
         print("*** Failed ://// ***")
         
-        
+"""
+
+run_airfoil_all(s, nu, speed, T, '/murtazo/cloudnaca/msh/'):
+
