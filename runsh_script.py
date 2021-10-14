@@ -12,6 +12,7 @@ import sys
 
 script_dir = "murtazo/cloudnaca"
 airfoil_dir = "murtazo/navier_stokes_solver"
+msh_dir = "murtazo/cloudnaca/msh/"
 
 def run_mesh_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
         #Input as strings:
@@ -44,9 +45,9 @@ def run_airfoil(sample, nu, velocity, endtime, meshfile):
         os.chdir(airfoil_dir)
         
         try:
-                print("$ ./airfoil", sample, nu, velocity, endtime, meshfile)
+                print("$ ./airfoil", sample, nu, velocity, endtime, msh_dir + meshfile)
                 print("Starting airfoil executable simulation...")
-                subprocess.check_call(["$ ./airfoil", sample, nu, velocity, endtime, meshfile])
+                subprocess.check_call(["$ ./airfoil", sample, nu, velocity, endtime, msh_dir + meshfile])
         except:
                 print("Unexpected error:", sys.exc_info()[0])
                 return False
