@@ -71,6 +71,7 @@ def retrieve_results(meshfile):
         return True  
 
 def run_airfoil_all(sample, nu, velocity, endtime, directory):
+        #Does not work yet :////
         cwd = os.getcwd()
         print(cwd)
         
@@ -92,7 +93,7 @@ start = '0';     stop = '10';     nr = '2';        nodes = '50';    refine_level
 #AIRFOIL INOUT
 s = '10';      nu = '0.01';       speed = '10.';     T = '1';        file = 'r0a0n50.xml'  
 
-"""
+
 if run_mesh_script(start, stop, nr, nodes, refine_levels):
         print("*** Data generated :))) ***")
         
@@ -105,7 +106,7 @@ if run_mesh_script(start, stop, nr, nodes, refine_levels):
 else:
         print("*** Failed ://// ***")
         
+
 """
-
 run_airfoil_all(s, nu, speed, T, '/murtazo/cloudnaca/msh'):
-
+"""
