@@ -59,7 +59,7 @@ def run_airfoil(sample, nu, velocity, endtime, meshfile):
         
   
 
-start = '0';     stop = str(10);     nr = str(2);        nodes = str(50);    refine_levels = str(1)
+start = '0';     stop = '10';     nr = '2';        nodes = '50';    refine_levels = '1'
 
 
 if run_mesh_script(start, stop, nr, nodes, refine_levels):
