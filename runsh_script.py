@@ -12,7 +12,10 @@ import sys
 
 script_dir = "murtazo/cloudnaca"
 
-def run_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
+def run_mesh_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
+        #Input as strings:
+        #run_mesh_script('0', '10', '5', '50', '1'):
+        #Runs runme.sh script generating mesh files and then converts all msh files to xml using convert_xml.sh
         cwd = os.getcwd()
         print(cwd)
         os.chdir(script_dir)
