@@ -11,6 +11,7 @@ import subprocess
 import sys
 
 script_dir = "murtazo/cloudnaca"
+airfoil_dir = "murtazo/navier_stokes_solver"
 
 def run_mesh_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
         #Input as strings:
@@ -19,9 +20,9 @@ def run_mesh_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
         cwd = os.getcwd()
         print(cwd)
         os.chdir(script_dir)
-        os.system("ls -l")
 
         try:
+                os.system("chmod +x runme.sh")
                 print("$ ./runme.sh", ang_0, ang_1, n_ang, n_nodes, n_lvl)
                 print("Loading...")
                 subprocess.check_call(["./runme.sh", ang_0, ang_1, n_ang, n_nodes, n_lvl])
@@ -34,13 +35,38 @@ def run_mesh_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
                 print("Unexpected error:", sys.exc_info()[0])
                 return False
 
-
         return True
 
+def run_airfoil(sample, nu, velocity, endtime, meshfile):
+        # run_airfoil('10','0.0001', '10.', '1', 'r0a0n50.xml'
+        cwd = os.getcwd()
+        print(cwd)
+        os.chdir(airfoil_dir)
+        
+        try:
+                print("$ ./airfoil", sample, nu, velocity, endtime, meshfile)
+                print("Starting airfoil executable simulation...")
+                subprocess.check_call(["$ ./airfoil", sample, nu, velocity, endtime, meshfile])
+        except:
+                print("Unexpected error:", sys.exc_info()[0])
+                return False
+        return True
+        
+        
+  
 
-start = str(0);     stop = str(10);     nr = str(2);        nodes = str(50);    refine_levels = str(1)
+start = '0';     stop = str(10);     nr = str(2);        nodes = str(50);    refine_levels = str(1)
+
 
 if run_mesh_script(start, stop, nr, nodes, refine_levels):
         print("*** Data generated :))) ***")
+        s = '10';      nu = '0.0001';       speed = '10.';     T = '1';        file = 'r0a0n50.xml'     
+        if run_airfoil(s, nu, speed, T, file):
+                print("*** AIRFOIL SIM SUCCEEDED ***")
+        else:
+                print("*** AIRFOIL FAIL ***")
+        
 else:
         print("*** Failed ://// ***")
+        
+        
