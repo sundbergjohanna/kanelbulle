@@ -25,14 +25,8 @@ def run_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
                 os.chdir(cwd)
                 os.system("ls -l")
                 os.system("chmod +x convert_xml.sh")
-                os.system("./convert_xml.sh")
-
+                os.system("./convert_xml.sh") 
                 
-                
-                
-        except subprocess.CalledProcessError:
-                print("Oops: ./runme.sh could not finish")
-                return False
         except:
                 print("Unexpected error:", sys.exc_info()[0])
                 return False
