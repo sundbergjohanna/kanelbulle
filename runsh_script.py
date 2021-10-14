@@ -61,8 +61,9 @@ def retrieve_results(meshfile):
         print(cwd)
         os.chdir(airfoil_dir)
         try: 
-                os.system('mkdir res_' + meshfile)
-                os.system('mv /result/drag_ligt.m /res_' + meshfile)
+                os.mkdir('res_' + meshfile)
+                os.system('mv results res_' + meshfile)
+                os.mkdir('results')
         except:
                 print("Unexpected error:", sys.exc_info()[0])
                 return False
