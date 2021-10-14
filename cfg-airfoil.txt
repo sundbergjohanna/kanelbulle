@@ -11,14 +11,6 @@ packages:
  - python-celery-common
 byobu_default: system
 
-write_files:
-  - path: /home/ubuntu/.tmux.conf
-    content: |
-      set -g mouse on
-  - path: /home/ubuntu/welcome.txt
-    content: |
-      Welcome to my VM.
-
 runcmd:
  - pip3 install flask
  - pip3 install celery
