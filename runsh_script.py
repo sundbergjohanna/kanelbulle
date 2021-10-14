@@ -55,18 +55,31 @@ def run_airfoil(sample, nu, velocity, endtime, meshfile):
                 print("Unexpected error:", sys.exc_info()[0])
                 return False
         return True
-        
-        
-  
 
+def retrieve_results(meshfile):
+        cwd = os.getcwd()
+        print(cwd)
+        os.chdir(airfoil_dir)
+        try: 
+                os.system('mkdir res_' + meshfile)
+                os.system('mv /result/drag_ligt.m /res_' + meshfile)
+        except:
+                print("Unexpected error:", sys.exc_info()[0])
+                return False
+        return True  
+  
+#MESH INPUT
 start = '0';     stop = '10';     nr = '2';        nodes = '50';    refine_levels = '1'
+#AIRFOIL INOUT
+s = '10';      nu = '0.01';       speed = '10.';     T = '1';        file = 'r0a0n50.xml'  
 
 
 if run_mesh_script(start, stop, nr, nodes, refine_levels):
         print("*** Data generated :))) ***")
-        s = '10';      nu = '0.0001';       speed = '10.';     T = '1';        file = 'r0a0n50.xml'     
+        
         if run_airfoil(s, nu, speed, T, file):
                 print("*** AIRFOIL SIM SUCCEEDED ***")
+                retrieve_results(file)
         else:
                 print("*** AIRFOIL FAIL ***")
         
