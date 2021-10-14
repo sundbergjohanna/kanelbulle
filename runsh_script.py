@@ -49,7 +49,7 @@ def run_airfoil(sample, nu, velocity, endtime, meshfile):
         try:
                 print("$ ./airfoil", sample, nu, velocity, endtime, msh_dir + meshfile)
                 print("Starting airfoil executable simulation...")
-                subprocess.check_call(["$ ./airfoil", sample, nu, velocity, endtime, msh_dir + meshfile])
+                subprocess.check_call(["./airfoil", sample, nu, velocity, endtime, msh_dir + meshfile])
                 os.chdir(cwd)
         except:
                 print("Unexpected error:", sys.exc_info()[0])
