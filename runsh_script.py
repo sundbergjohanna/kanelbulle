@@ -62,7 +62,9 @@ def retrieve_results(meshfile):
         os.chdir(airfoil_dir)
         try: 
                 os.mkdir('res_' + meshfile)
-                os.system('cd results')
+                os.system('ls -l')
+                os.chdir('results')
+                os.system('ls')
                 os.system('mv drag_ligt.m ../res_' + meshfile)
                 os.chdir(cwd)
         except:
