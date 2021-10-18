@@ -8,7 +8,6 @@ import json
 import os
 from celery import Celery
 from flask import Flask, jsonify
-import runsh_script as airfoil
 
 
 def make_celery(app):
@@ -37,34 +36,55 @@ def one_airfoil_run():
 
   
 #Celery task normalized result
-@celery.task(name='make_celery.run_simulation')
-def run_simulation():
-    #MESH INPUT
-    start = '0';     stop = '10';     nr = '2';        nodes = '50';    refine_levels = '1'
-    #AIRFOIL INOUT
-    s = '10';      nu = '0.01';       speed = '10.';     T = '1';        file = 'r0a0n50.xml' 
+@celery.task(name='make_celery.run_airfoil')
+def run_airfoil(sample, nu, velocity, endtime, meshfile):
+        # run_airfoil('10','0.0001', '10.', '1', 'r0a0n50.xml')
+        # Inputs as string
+        # run_airfoil(samples, viscosity nu, velocity speed, total time, mesh file)
+        cwd = os.getcwd()
+        print(cwd)
+        os.chdir(airfoil_dir)
+        print('meshfile =', meshfile)
+        msh_dir = "../cloudnaca/msh/"
+        print('msh_dir + mesfile=', msh_dir + meshfile)
+        
+        try:
+                print("$ ./airfoil", sample, nu, velocity, endtime, msh_dir + meshfile)
+                print("Starting airfoil executable simulation...")
+                subprocess.check_call(["./airfoil", sample, nu, velocity, endtime, msh_dir + meshfile])
+                os.chdir(cwd)
+                retrieve_results(meshfile)
+        except:
+                print("Unexpected error:", sys.exc_info()[0])
+                
+        airfoil_dir = "murtazo/navier_stokes_solver"
+        cwd = os.getcwd()
+        os.chdir(airfoil_dir)
+        os.chdir('res_' + meshfile)
 
-    if airfoil.run_airfoil(s, nu, speed, T, file):
-          print("*** AIRFOIL SIM SUCCEEDED ***")
-          airfoil.retrieve_results(file)
-    else:
-          print("*** AIRFOIL FAIL ***")  
+        result_file = open('drag_ligt.m','r')
 
-    airfoil_dir = "murtazo/navier_stokes_solver"
-    cwd = os.getcwd()
-    os.chdir(airfoil_dir)
-    os.chdir('res_' + file)
-    
-    result_file = open('drag_ligt.m','r')
-    
-    contents = result_file.read()
-    dictionary = ast.literal_eval(contents)
+        contents = result_file.read()
+        dictionary = ast.literal_eval(contents)
 
-    result_file.close()
-    
-    os.chdir(cwd)
-    
-    return dictionary
+        result_file.close()
+            
+        return dictionary
+
+def retrieve_results(meshfile):
+        # Retrieves the result file and stores it in navier_stokes-folder in a folder named as the mesh-file used
+        cwd = os.getcwd()
+        print(cwd)
+        os.chdir(airfoil_dir)
+        try: 
+                os.mkdir('res_' + meshfile)
+                os.chdir('results')
+                os.system('mv drag_ligt.m ../res_' + meshfile)
+                os.chdir(cwd)
+        except:
+                print("Unexpected error:", sys.exc_info()[0])
+                return False
+        return True
 
   
   
