@@ -25,7 +25,7 @@ def make_celery(app):
     celery.Task = ContextTask
     return celery
   
-  flask_app = Flask(__name__)
+flask_app = Flask(__name__)
 celery = make_celery(flask_app)
 
 #Flask methods
@@ -37,21 +37,18 @@ def one_airfoil_run():
 
   
 #Celery task normalized result
-@celery.task(name='make_celery.')
+@celery.task(name='make_celery.run_simulation')
 def run_simulation():
     #MESH INPUT
     start = '0';     stop = '10';     nr = '2';        nodes = '50';    refine_levels = '1'
     #AIRFOIL INOUT
     s = '10';      nu = '0.01';       speed = '10.';     T = '1';        file = 'r0a0n50.xml' 
 
-    if airfoil.run_mesh_script(start, stop, nr, nodes, refine_levels):
-          print("*** Data generated :))) ***")
-
-          if airfoil.run_airfoil(s, nu, speed, T, file):
-                  print("*** AIRFOIL SIM SUCCEEDED ***")
-                  airfoil.retrieve_results(file)
-          else:
-                  print("*** AIRFOIL FAIL ***")  
+    if airfoil.run_airfoil(s, nu, speed, T, file):
+          print("*** AIRFOIL SIM SUCCEEDED ***")
+          airfoil.retrieve_results(file)
+    else:
+          print("*** AIRFOIL FAIL ***")  
 
     airfoil_dir = "murtazo/navier_stokes_solver"
     cwd = os.getcwd()
@@ -64,6 +61,8 @@ def run_simulation():
     dictionary = ast.literal_eval(contents)
 
     result_file.close()
+    
+    os.chdir(cwd)
     
     return dictionary
 
