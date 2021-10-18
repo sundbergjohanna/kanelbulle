@@ -31,7 +31,7 @@ celery = make_celery(flask_app)
 #Flask methods
 @flask_app.route('/result', methods=['GET'] )
 def one_airfoil_run():
-    res = .delay()
+    res = run_simulation.delay()
     result = res.get()
     return jsonify(result)
 
@@ -44,21 +44,28 @@ def run_simulation():
     #AIRFOIL INOUT
     s = '10';      nu = '0.01';       speed = '10.';     T = '1';        file = 'r0a0n50.xml' 
 
-    if run_mesh_script(start, stop, nr, nodes, refine_levels):
+    if airfoil.run_mesh_script(start, stop, nr, nodes, refine_levels):
           print("*** Data generated :))) ***")
 
-          if run_airfoil(s, nu, speed, T, file):
+          if airfoil.run_airfoil(s, nu, speed, T, file):
                   print("*** AIRFOIL SIM SUCCEEDED ***")
-                  retrieve_results(file)
+                  airfoil.retrieve_results(file)
           else:
                   print("*** AIRFOIL FAIL ***")  
 
     airfoil_dir = "murtazo/navier_stokes_solver"
     cwd = os.getcwd()
     os.chdir(airfoil_dir)
-    os.chdir(res_' + meshfile)                 
+    os.chdir('res_' + file)
+    
+    result_file = open('drag_ligt.m','r')
+    
+    contents = result_file.read()
+    dictionary = ast.literal_eval(contents)
 
-    return 
+    result_file.close()
+    
+    return dictionary
 
   
   
