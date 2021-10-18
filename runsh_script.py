@@ -16,7 +16,8 @@ airfoil_dir = "murtazo/navier_stokes_solver"
 def run_mesh_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
         #Input as strings:
         #run_mesh_script('0', '10', '5', '50', '1'):
-        #Runs runme.sh script generating mesh files and then converts all msh files to xml using convert_xml.sh
+        #run_mesh_script(angle 1, angle 2, number of angles in the span, number of nodes, number of refinement levels)
+        #Runs runme.sh script generating mesh files, converst msh --> xml file using conver_xml.sh
         cwd = os.getcwd()
         print(cwd)
         os.chdir(script_dir)
@@ -38,7 +39,9 @@ def run_mesh_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
         return True
 
 def run_airfoil(sample, nu, velocity, endtime, meshfile):
-        # run_airfoil('10','0.0001', '10.', '1', 'r0a0n50.xml'
+        # run_airfoil('10','0.0001', '10.', '1', 'r0a0n50.xml')
+        # Inputs as string
+        # run_airfoil(samples, viscosity nu, velocity speed, total time, mesh file)
         cwd = os.getcwd()
         print(cwd)
         os.chdir(airfoil_dir)
@@ -57,6 +60,7 @@ def run_airfoil(sample, nu, velocity, endtime, meshfile):
         return True
 
 def retrieve_results(meshfile):
+        # Retrieves the result file and stores it in navier_stokes-folder in a folder named as the mesh-file used
         cwd = os.getcwd()
         print(cwd)
         os.chdir(airfoil_dir)
@@ -84,16 +88,13 @@ def run_airfoil_all(sample, nu, velocity, endtime, directory):
                 retrieve_results(file)
                 
                 
-        
-        
-
   
 #MESH INPUT
 start = '0';     stop = '10';     nr = '2';        nodes = '50';    refine_levels = '1'
 #AIRFOIL INOUT
 s = '10';      nu = '0.01';       speed = '10.';     T = '1';        file = 'r0a0n50.xml'  
 
-
+#TESTRUN OF FUNCTIONS
 if run_mesh_script(start, stop, nr, nodes, refine_levels):
         print("*** Data generated :))) ***")
         
