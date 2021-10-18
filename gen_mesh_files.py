@@ -8,9 +8,6 @@ import os
 import subprocess
 import sys
 
-#Input variables for running the script
-start = '0';     stop = '10';     nr = '2';        nodes = '50';    refine_levels = '1'
-
 script_dir = "murtazo/cloudnaca"
 
 def run_mesh_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
@@ -39,8 +36,10 @@ def run_mesh_script(ang_0, ang_1, n_ang, n_nodes, n_lvl):
         return True
       
 if __name__ == '__main__':
-  if run_mesh_script(start, stop, nr, nodes, refine_levels):
-        print("*** XML files generated :))) ***")
-  else:
-        print("*** Failed ://// ***")
+        #Input variables for running the script
+        start = '0';     stop = '10';     nr = '2';        nodes = '50';    refine_levels = '1'
+        if run_mesh_script(start, stop, nr, nodes, refine_levels):
+                print("*** XML files generated :))) ***")
+        else:
+                print("*** Failed ://// ***")
   
