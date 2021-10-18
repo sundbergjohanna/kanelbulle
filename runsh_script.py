@@ -97,19 +97,5 @@ s = '10';      nu = '0.01';       speed = '10.';     T = '1';        file = 'r0a
 #TESTRUN OF FUNCTIONS
 if run_mesh_script(start, stop, nr, nodes, refine_levels):
         print("*** Data generated :))) ***")
-        
-        
-"""        if run_airfoil(s, nu, speed, T, file):
-                print("*** AIRFOIL SIM SUCCEEDED ***")
-                retrieve_results(file)
-        else:
-                print("*** AIRFOIL FAIL ***")
-"""
-        
 else:
         print("*** Failed ://// ***")
-        
-
-"""
-run_airfoil_all(s, nu, speed, T, '/murtazo/cloudnaca/msh'):
-"""
