@@ -4,17 +4,17 @@ apt_update: true
 apt_upgrade: true
 packages:
  - python3-pip
- - python3-dev
+ - python3-dev 
  - build-essential
  - tmux
- - rabbitmq-server
+ - rabbitmq-server 
  - python-celery-common
 byobu_default: system
 
 runcmd:
  - pip3 install flask
  - pip3 install celery
- - pip3 install flower
+ - pip3 install flower 
  - cd /home
  - sudo chown ubuntu:ubuntu ubuntu
  - cd /home/ubuntu
