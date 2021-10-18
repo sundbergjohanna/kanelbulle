@@ -30,7 +30,7 @@ celery = make_celery(flask_app)
 #Flask methods
 @flask_app.route('/result', methods=['GET'] )
 def one_airfoil_run():
-    res = run_simulation.delay()
+    res = run_airfoil('10','0.0001', '10.', '1', 'r0a0n50.xml').delay()
     result = res.get()
     return jsonify(result)
 
