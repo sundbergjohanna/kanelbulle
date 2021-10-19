@@ -11,6 +11,7 @@ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubun
 sudo apt-get update
 apt-cache policy docker-ce
 sudo apt-get install -y docker-ce
+sudo apt-get install -y python-dolfin
 sudo apt-get install dolfin-bin
 echo "*Image and packages installed."
 
