@@ -15,6 +15,7 @@ runcmd:
  - pip3 install flask
  - pip3 install celery
  - pip3 install flower 
+ - sudo apt-get install dolfin-bin
  - cd /home
  - sudo chown ubuntu:ubuntu ubuntu
  - cd /home/ubuntu
