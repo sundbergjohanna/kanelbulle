@@ -9,6 +9,8 @@ same procedure if you began by enetring.
 **$docker-compose up --build **      
 but instead of **$docker-compose up -d --build**  
 **$docker-compose up -d --build** , use.  
-**docker-compose up -d --build --force-recreate**
+**docker-compose up -d --build --force-recreate**  
+  
+See, https://stackoverflow.com/questions/59413021/docker-container-fails-because-service-rabbit-failed-programming-external-connec
 
   
