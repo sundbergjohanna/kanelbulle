@@ -11,6 +11,7 @@ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubun
 sudo apt-get update
 apt-cache policy docker-ce
 sudo apt-get install -y docker-ce
+sudo apt-get install dolfin-bin
 echo "*Image and packages installed."
 
 sudo docker run --name airfoil_container -td -v $(pwd):/home/fenics/shared -w /home/fenics/shared quay.io/fenicsproject/stable:current
