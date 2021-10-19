@@ -7,7 +7,8 @@ $ docker-compose up -d --build
 
 same procedure if you began by enetring. 
 **$docker-compose up --build **      
-but instead of **$docker-compose up -d --build** , use.  
+but instead of **$docker-compose up -d --build**  
+**$docker-compose up -d --build** , use.  
 **docker-compose up -d --build --force-recreate**
 
   
