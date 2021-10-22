@@ -12,7 +12,6 @@ WORKDIR /flask_app
 ENV FLASK_ENV=development
 
 CMD flask run --host=0.0.0.0
-CMD git clone https://github.com/sundbergjohanna/kanelbulle.git
 
 #CMD gunicorn --workers $WORKERS \
 #  --threads $THREADS \
