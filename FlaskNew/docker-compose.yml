@@ -7,8 +7,6 @@ services:
       - "5000:5000"
     depends_on:
       - rabbit
-    volumes:
-      - quay.io/fenicsproject/stable:current:/home/fenics/shared
 
   rabbit:
     hostname: rabbit
@@ -26,3 +24,6 @@ services:
     depends_on:
       - rabbit
       - flask_app
+    image: "quay.io/fenicsproject/stable:current"
+    volumes:
+      - quay.io/fenicsproject/stable:current
