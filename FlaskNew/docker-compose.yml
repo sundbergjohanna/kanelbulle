@@ -17,6 +17,8 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
+     volumes:
+      - quay.io/fenicsproject/stable:current:/home/fenics/shared
 
   simple_worker:
     build: './simple_worker'
