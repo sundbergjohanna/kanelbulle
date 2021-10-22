@@ -19,4 +19,9 @@ but instead of **$docker-compose up -d --build**
   
 See, https://stackoverflow.com/questions/59413021/docker-container-fails-because-service-rabbit-failed-programming-external-connec
 
+
   
+I FlaskNew
+run command 
+docker pull quay.io/fenicsproject/stable:current
+before running docker compose. This will give simpleworker this image.
