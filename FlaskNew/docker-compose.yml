@@ -7,6 +7,8 @@ services:
       - "5000:5000"
     depends_on:
       - rabbit
+    volumes:
+      - quay.io/fenicsproject/stable:current:/home/fenics/shared
 
   rabbit:
     hostname: rabbit
@@ -17,8 +19,6 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
-     volumes:
-      - quay.io/fenicsproject/stable:current:/home/fenics/shared
 
   simple_worker:
     build: './simple_worker'
