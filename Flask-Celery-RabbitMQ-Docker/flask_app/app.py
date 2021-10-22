@@ -3,7 +3,7 @@ from celery import Celery
 
 app = Flask(__name__)
 simple_app = Celery('simple_worker',
-                    broker='amqp://admin:mypass@rabbit:5672',
+                    broker='amqp://admin:password@rabbit:5672',
                     backend='rpc://')
 
 
