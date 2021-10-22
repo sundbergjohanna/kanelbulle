@@ -25,5 +25,3 @@ services:
       - rabbit
       - flask_app
     image: "quay.io/fenicsproject/stable:current"
-    volumes:
-      - quay.io/fenicsproject/stable:current
