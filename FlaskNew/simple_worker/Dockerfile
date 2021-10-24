@@ -7,8 +7,8 @@ RUN pip install -r /requirements.txt
 #COPY app.py /app.py
 ADD . /simple_worker
 WORKDIR /simple_worker
-RUN chmod +x first_step.sh
-RUN ./first_step.sh
+RUN chmod +x unpack_murtazo.sh
+RUN ./unpack_murtazo.sh
 
 ENTRYPOINT celery -A tasks worker --loglevel=info
 #-Q celery_worker
