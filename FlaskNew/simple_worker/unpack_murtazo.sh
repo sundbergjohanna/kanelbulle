@@ -22,8 +22,8 @@ apt-get update
 apt-get -y install gmsh
 sed -i '\/Applications\/Gmsh.app\/Contents\/MacOS\/gmsh/c\GMSHBIN=\"\/usr\/bin\/gmsh\"' runme.sh
 apt install python-numpy
-sudo apt-get install -y python-dolfin
-sudo apt-get install dolfin-bin
+apt-get install -y python-dolfin
+apt-get install dolfin-bin
 cd ..
 cd ..
 
