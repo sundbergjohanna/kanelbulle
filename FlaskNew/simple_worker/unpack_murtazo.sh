@@ -18,12 +18,7 @@ make -j 2
 echo "*Entering /cloudnaca "
 cd ..
 cd cloudnaca
-apt-get update
-apt-get -y install gmsh
 sed -i '\/Applications\/Gmsh.app\/Contents\/MacOS\/gmsh/c\GMSHBIN=\"\/usr\/bin\/gmsh\"' runme.sh
-apt install python-numpy
-apt-get install -y python-dolfin
-apt-get install dolfin-bin
 cd ..
 cd ..
 
