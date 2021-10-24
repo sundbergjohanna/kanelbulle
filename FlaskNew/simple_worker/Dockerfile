@@ -1,4 +1,6 @@
-FROM python:3.8-slim
+FROM quay.io/fenicsproject/stable:current
+RUN apt-get update
+RUN apt-get install -y python python3 python3-pip python-numpy gmsh
 
 # layer caching for faster builds
 COPY requirements.txt /
