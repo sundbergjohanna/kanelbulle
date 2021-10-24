@@ -1,7 +1,7 @@
 FROM quay.io/fenicsproject/stable:current
 RUN apt-get update
-RUN apt-get install -y python python3
-RUN apt-get install -y python-dolfin
+RUN apt-get install -y python3
+RUN apt-get install -y python3-dolfin
 RUN apt-get install -y dolfin-bin
 RUN apt-get -y install gmsh
 RUN apt-get install -y python3-pip
