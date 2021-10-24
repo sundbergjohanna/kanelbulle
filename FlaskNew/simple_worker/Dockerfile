@@ -1,12 +1,13 @@
 FROM quay.io/fenicsproject/stable:current
+FROM python:3.8
+
 RUN apt-get update
 RUN apt-get install -y python3
 RUN apt-get install -y python3-dolfin
 RUN apt-get install -y dolfin-bin
 RUN apt-get -y install gmsh
+RUN apt-get -y python-numpy 
 RUN apt-get install -y python3-pip
-RUN pip3 install --upgrade pip
-RUN pip3 install numpy
 
 # layer caching for faster builds
 COPY requirements.txt /
