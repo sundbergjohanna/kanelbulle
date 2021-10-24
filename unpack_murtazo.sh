@@ -23,11 +23,10 @@ apt-get update
 apt-get -y install gmsh
 sed -i '\/Applications\/Gmsh.app\/Contents\/MacOS\/gmsh/c\GMSHBIN=\"\/usr\/bin\/gmsh\"' runme.sh
 apt install python-numpy
+sudo apt-get install -y python-dolfin
+sudo apt-get install dolfin-bin
 cd ..
 cd ..
-apt-get install -y rabbitmq-server
-pip3 install flask
-pip3 install celery
 
 #Test running
 # ./runme.sh 0 30 10 200 3
