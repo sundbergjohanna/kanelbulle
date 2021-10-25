@@ -6,13 +6,13 @@ RUN apt-get install -y python3-pip
 RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip install numpy
 RUN apt-get install -y gmsh
-RUN apt-get install -y cmake
-#RUN apt-get -y install build-essential cmake
+#RUN apt-get install -y cmake
+RUN apt-get -y install build-essential cmake
 
 
 #RUN apt-get install -y python-numpy
 #RUN apt-get install -y python-gmsh
-#RUN pip3 install --upgrade pip
+RUN pip3 install --upgrade pip
 
 #USER root
 #RUN apt-get -qq update && \
