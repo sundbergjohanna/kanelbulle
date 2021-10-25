@@ -21,7 +21,6 @@ See, https://stackoverflow.com/questions/59413021/docker-container-fails-because
 
 
   
-I FlaskNew
-run command 
-docker pull quay.io/fenicsproject/stable:current
-before running docker compose. This will give simpleworker this image.
+I FLASK NEW innan du kör docker-compose
+  $ docker pull quay.io/fenicsproject/stable:current
+  
