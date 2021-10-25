@@ -20,7 +20,6 @@ services:
 
   simple_worker:
     build: './simple_worker'
-    image: 'quay.io/fenicsproject/stable:current'
     user: nobody
     depends_on:
       - rabbit
