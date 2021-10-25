@@ -1,11 +1,10 @@
 FROM quay.io/fenicsproject/stable:current
 FROM python:3.8
 
-RUN apt-get update
-RUN apt-get install -y python && \
-    apt-get install -y python3-pip && \
-    apt-get install -y python-numpy && \
-    apt-get install -y python-gmsh
+RUN apt-get -qq update
+RUN apt-get install -y python3-pip
+RUN apt-get install -y python-numpy
+RUN apt-get install -y python-gmsh
 RUN pip3 install --upgrade pip
 
 #USER root
