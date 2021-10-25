@@ -6,7 +6,7 @@ RUN apt-get update && \
     apt-get -y install python3-scipy && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    apt-get -y install gmsh
+    apt-get -y install python-gmsh
 
 
 # layer caching for faster builds
