@@ -1,15 +1,23 @@
 FROM quay.io/fenicsproject/stable:current
 FROM python:3.8
 
-USER root
-RUN apt-get -qq update && \
-    apt-get -y upgrade && \
-    apt-get -y install python3-scipy && \
-    apt-get install -y python3-dolfin && \
-    apt-get -y install build-essential cmake && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
-USER root
+RUN apt-get update
+RUN apt-get install -y python && \
+    apt-get install -y python3-pip && \
+    apt-get install -y python-numpy && \
+    apt-get install -y python-gmsh
+RUN pip3 install --upgrade pip
+RUN tar xvf murtazo.tgz
+
+#USER root
+#RUN apt-get -qq update && \
+#    apt-get -y upgrade && \
+#    apt-get -y install python3-scipy && \
+#    apt-get install -y python3-dolfin && \
+#    apt-get -y install build-essential cmake && \
+#    apt-get clean && \
+#    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
+#USER root
 
 #RUN apt-get update && \
 #    apt-get -y upgrade && \
