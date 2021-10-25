@@ -4,6 +4,8 @@
 # n_angles    : split angle_stop-angle_start into n_angles parts
 # n_nodes     : number of nodes on one side of airfoil
 # n_levels    : number of refinement steps in meshing 0=no refinement 1=one time 2=two times etc...
+cd murtazo
+cd cloudnaca
 chmod +x runme.sh
 ./runme.sh 0 30 10 200 1
 echo "*./runme complete "
