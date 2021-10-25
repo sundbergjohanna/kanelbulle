@@ -1,7 +1,7 @@
 FROM quay.io/fenicsproject/stable:current
 FROM python:3.8
 
-RUN apt-get -qq update && \
+RUN apt-get update && \
     apt-get -y upgrade && \
     apt-get -y install python3-scipy && \
     apt-get clean && \
