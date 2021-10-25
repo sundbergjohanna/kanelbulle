@@ -6,8 +6,6 @@ cd murtazo
 tar xvf cloudnaca.tgz
 tar xvf navier_stokes_solver.tar 
 
-apt-get install -y python3-dolfin
-
 #Install navier solver
 echo "*Entering /navier_stokes_solver"
 cd navier_stokes_solver/src
