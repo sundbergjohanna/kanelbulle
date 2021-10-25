@@ -1,6 +1,6 @@
 FROM quay.io/fenicsproject/stable:current
 
-FROM quay.io/fenicsproject/stable:current
+
 USER root
 RUN apt-get update
 RUN apt-get install python3-pip -y
