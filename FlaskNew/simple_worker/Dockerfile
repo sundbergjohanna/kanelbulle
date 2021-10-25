@@ -5,6 +5,7 @@ USER root
 RUN apt-get -qq update && \
     apt-get -y upgrade && \
     apt-get -y install python3-scipy && \
+    apt-get install -y python3-dolfin && \
     apt-get -y install build-essential cmake && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
