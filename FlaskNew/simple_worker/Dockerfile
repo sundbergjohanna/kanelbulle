@@ -3,10 +3,10 @@ FROM quay.io/fenicsproject/stable:current
 
 USER root
 RUN apt-get update
-RUN apt-get install python3-pip -y
+RUN apt-get install python-pip python3-pip -y
 RUN pip3 install --upgrade pip
-#RUN pip3 install celery
-#RUN pip3 install numpy
+RUN pip3 install celery
+RUN pip3 install -U numpy
 RUN apt-get install -y gmsh
 
 #RUN apt-get install -y python-numpy
@@ -32,8 +32,8 @@ RUN apt-get install -y gmsh
 
 
 # layer caching for faster builds
-COPY requirements.txt /
-RUN pip3 install -r /requirements.txt
+#COPY requirements.txt /
+#RUN pip3 install -r /requirements.txt
 
 #COPY app.py /app.py
 ADD . /simple_worker
