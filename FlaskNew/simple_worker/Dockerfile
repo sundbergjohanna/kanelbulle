@@ -1,8 +1,11 @@
 FROM quay.io/fenicsproject/stable:current
 
+FROM quay.io/fenicsproject/stable:current
+USER root
 RUN apt-get update
-RUN apt-get install -y python3-pip
+RUN apt-get install python3-pip -y
 RUN pip3 install --upgrade pip
+RUN pip3 install celery
 RUN apt-get install -y gmsh
 
 #RUN apt-get install -y python-numpy
