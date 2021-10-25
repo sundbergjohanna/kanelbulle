@@ -1,12 +1,20 @@
 FROM quay.io/fenicsproject/stable:current
 FROM python:3.8
 
-RUN apt-get update && \
+USER root
+RUN apt-get -qq update && \
     apt-get -y upgrade && \
     apt-get -y install python3-scipy && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    apt-get -y install python-gmsh
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+USER root
+
+#RUN apt-get update && \
+#    apt-get -y upgrade && \
+#    apt-get -y install python3-scipy && \
+#    apt-get clean && \
+#    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+#    apt-get -y install python-gmsh
 
 
 # layer caching for faster builds
