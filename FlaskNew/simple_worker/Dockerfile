@@ -3,9 +3,10 @@ FROM python:3.8
 
 RUN apt-get -qq update
 RUN apt-get install -y python3-pip
+RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip install numpy
 RUN apt-get install -y gmsh
-RUN apt-get -y install build-essential cmake
+#RUN apt-get -y install build-essential cmake
 
 
 #RUN apt-get install -y python-numpy
