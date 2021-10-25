@@ -7,9 +7,9 @@ RUN apt-get -qq update && \
     apt-get -y install python3-scipy && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    apt-get install -y python3-dolfin
-    apt-get -y install gmsh
-    apt-get install -y dolfin-bin
+    apt-get install -y python3-dolfin && \
+    apt-get -y install gmsh && \
+    apt-get install -y dolfin-bin && \
 USER root
 
 # layer caching for faster builds
