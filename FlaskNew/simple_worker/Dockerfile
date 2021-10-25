@@ -39,6 +39,8 @@ ADD . /simple_worker
 WORKDIR /simple_worker
 RUN chmod +x unpack_murtazo.sh
 RUN ./unpack_murtazo.sh
+RUN chmod +x second_step.sh
+RUN ./second_step.sh
 
 ENTRYPOINT celery -A tasks worker --loglevel=info
 #-Q celery_worker
