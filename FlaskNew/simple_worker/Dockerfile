@@ -6,8 +6,9 @@ RUN apt-get -qq update && \
     apt-get -y upgrade && \
     apt-get -y install python3-scipy && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-USER nobody
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    apt-get install build-essential cmake
+USER root
 
 #RUN apt-get update && \
 #    apt-get -y upgrade && \
