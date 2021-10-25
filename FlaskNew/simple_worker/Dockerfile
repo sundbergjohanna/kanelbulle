@@ -1,14 +1,13 @@
 FROM quay.io/fenicsproject/stable:current
 FROM python:3.8
 
-USER root
 RUN apt-get -qq update && \
     apt-get -y upgrade && \
     apt-get -y install python3-scipy && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     apt-get -y install gmsh
-USER root
+
 
 # layer caching for faster builds
 COPY requirements.txt /
