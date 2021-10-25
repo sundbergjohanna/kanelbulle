@@ -6,12 +6,11 @@ RUN apt-get -qq update && \
     apt-get -y upgrade && \
     apt-get -y install python3-scipy && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    apt-get install -y python3-dolfin
+    apt-get -y install gmsh
+    apt-get install -y dolfin-bin
 USER root
-RUN apt-get install -y python3-dolfin
-RUN apt-get install -y dolfin-bin
-RUN apt-get -y install gmsh
-RUN apt-get -y python-numpy 
 
 # layer caching for faster builds
 COPY requirements.txt /
