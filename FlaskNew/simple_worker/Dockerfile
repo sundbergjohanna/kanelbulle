@@ -7,7 +7,6 @@ RUN apt-get install -y python && \
     apt-get install -y python-numpy && \
     apt-get install -y python-gmsh
 RUN pip3 install --upgrade pip
-RUN tar xvf murtazo.tgz
 
 #USER root
 #RUN apt-get -qq update && \
