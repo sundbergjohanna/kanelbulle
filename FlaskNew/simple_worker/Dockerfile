@@ -7,7 +7,7 @@ RUN apt-get -qq update && \
     apt-get -y install python3-scipy && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-USER root
+USER nobody
 
 #RUN apt-get update && \
 #    apt-get -y upgrade && \
