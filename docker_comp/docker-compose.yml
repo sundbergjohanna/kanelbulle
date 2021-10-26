@@ -1,0 +1,49 @@
+version: '3'
+services:
+
+# ------  Docker for rabbit server ------ #
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:latest
+    environment: # environment variables, could be u=admin, p=mypass
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    ports:
+      - "5672:5672"
+
+# ------  Docker for flask application ------ #
+  flask_docker:
+    build: './flask_app'
+    ports:
+      - "5000:5000"
+    depends_on:
+      - rabbit
+
+# ------  Docker for flower server ------ #
+  flower:
+    image: mher/flower:latest # image: mher/flower:0.9.5
+    network_mode: "host"
+    environment:
+      - CELERY_BROKER_URL=pyamqp://admin:admin@localhost:5672
+      - FLOWER_PORT=8888
+    ports:
+      - "8888:8888"
+    depends_on:
+      - rabbit
+
+# ------  Docker for test worker ------ #
+  worker:
+    build: './worker'
+    user: nobody
+    depends_on:
+      - rabbit
+      - flask_docker
+
+
+# ------  Docker for murtazo worker ------ #
+  murtazo_worker:
+    build: './murtazo_worker'
+    user: root
+    depends_on:
+      - rabbit
+      - flask_docker
