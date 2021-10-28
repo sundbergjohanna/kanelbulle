@@ -12,8 +12,9 @@ def calculate(xmlfile):
     os.chdir("results")
     #file = open("drag_ligt.m", "r")
     #string = file.readline()
+    lines = [xmlfile]
     with open("drag_ligt.m", "r") as file:
-        lines = file.readlines()
+        lines = lines + file.readlines()
         lines = [line.rstrip() for line in lines]
 
     os.chdir("..")
