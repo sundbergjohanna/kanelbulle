@@ -26,6 +26,10 @@ sed -i '\/Applications\/Gmsh.app\/Contents\/MacOS\/gmsh/c\GMSHBIN=\"\/usr\/bin\/
 chmod +x runme.sh
 ./runme.sh 0 30 10 200 1
 echo "*./runme complete "
+cd ..
+cd ..
+chmod +x convert_xml.sh
+./convert_xml.sh
 #cd msh
 #dolfin-convert r0a0n200.msh r0a0n200.xml
 #cd ..
