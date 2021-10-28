@@ -10,7 +10,7 @@ cd murtazo
 code code code...
 ```
 
-bla bla inline code: `docker-compsose up`
+bla bla inline code: `docker-compose up`
 
 
 
