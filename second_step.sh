@@ -30,7 +30,7 @@ cd ..
 cd ..
 chmod +x convert_xml.sh
 ./convert_xml.sh
-exec third_step.sh
+sudo exec third_step.sh
 #cd msfla
 #dolfin-convert r0a0n200.msh r0a0n200.xml
 #cd ..
