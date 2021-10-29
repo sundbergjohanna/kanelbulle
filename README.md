@@ -6,7 +6,7 @@ The airfoil project is made to work as a cloud service using celery workers, Rab
 ## Starting up VMs
 For starting upp VMs CloudInit is used.
 On your own terminal source the file from your cloudprovider
-`source UPPMAX 2021_1-5-openrc.sh`
+```source UPPMAX 2021_1-5-openrc.sh```
 
 Update the `ssc-userdata-instance.py` with your keyfile and flavour of choice. The minimum flavour required for the application to work is `ssc.medium`. Run `python ssc-userdata-instance.py`. Make sure to have your keyfile, `ssc-userdata-instance.py` and `cfg-airfoil.txt` in the same directory. 
 
@@ -24,12 +24,15 @@ $ sudo kill -9 <pid id>
 
 cd into `kanelbulle/this_should_work/docker_comp/`
 
+``` sudo docker-compose up```
+starts the service with two workers
 
+```sudo docker-compose up --scale worker_1=N```
+starts the service with N workers
 
-same procedure if you began by enetring. **$docker-compose up --build **
-but instead of $docker-compose up -d --build
-$docker-compose up -d --build , use.
-docker-compose up -d --build --force-recreate
+Go into a web browser and run
+http://<floating-ip>:5000/murtazo
+
 
 
 bla bla inline code: `docker-compose up`
