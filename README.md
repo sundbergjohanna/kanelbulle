@@ -31,11 +31,5 @@ starts the service with two workers
 starts the service with N workers
 
 Go into a web browser and run
-http://<floating-ip>:5000/murtazo
-
-
-
-bla bla inline code: `docker-compose up`
-
-
+`http://<floating-ip>:5000/murtazo`
 
