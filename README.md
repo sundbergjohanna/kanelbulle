@@ -36,6 +36,6 @@ starts the service with two workers
 ```sudo docker-compose up --scale worker_1=N```
 starts the service with N workers
 
-Go into a web browser and run
-`http://<floating-ip>:5000/murtazo`
+Go into a web browser and run(obs number of files < N number of workes)
+`http://<floating-ip>:5000/murtazo/<number of files>`
 
