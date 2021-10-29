@@ -12,22 +12,34 @@ simple_app = Celery('worker',
 def proc(name):
     return name
 
-@app.route('/test')
-def app_test():
-    #res = test.delay()
-    res = simple_app.send_task('cel.test')
-    return res.get()
+# -------- Flask Test -------- #
+# Returns entered name
+@app.route('/')
+def process():
+    return render_template('welcome.html')
 
 # Testing running airfoil with flask+celery
-@app.route('/murtazo')
-def mur_test():
-    #res = test.delay()
-    file = 'r0a0n200.xml'
-    res = simple_app.send_task('cel_mur.calculate', [file])
-    id = res.id
-    # return res.get()
-    list = res.get()
-    return render_template("my_template.html", data=list)
+@app.route('/murtazo/<int:nr_files>')
+def mur_test(nr_files):
+    mesh_file_list = []
+    temp_res = []
+    result = []
+    for subdir, dirs, files in os.walk('msh'):  # name of folder containing xml files
+        for file in files:
+            filepath = subdir + os.sep + file
+            print(filepath)
+            mesh_file_list.append(filepath)
+
+            # only to test with two files
+            if len(mesh_file_list) == nr_files:
+                break
+
+    for arg in mesh_file_list:
+        temp_res.append(simple_app.send_task('cel_mur.calculate', [arg]))
+    for x in temp_res:
+        result.append(x.get())
+
+    return render_template("my_template.html", data=result)
 
 # MongoDB test
 @app.route('/test/<name>')
