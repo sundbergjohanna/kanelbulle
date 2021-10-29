@@ -13,7 +13,12 @@ Update the `ssc-userdata-instance.py` with your keyfile and flavour of choice. T
 Please have patience when setting up the VM! This will take time! The cloud cfg installs necessary packages on the VM and deploys a docker with the airfoil application to run the mesh files with below input. If you wish another set of mesh arguments edit this in `second_step.sh` shell script.
 `#ARGUMENTS to runme.sh <angle.start> <angle.stop> <no.of.angles> <no.of.nodes> <no.of.refinement.levels>
  #./runme.sh 0 30 10 200 1`
-Once the set up is finished you need to copy the files from the initial airfoil docker and place them in directory `kanelbulle/this_should_work/docker_comp/murtazo_worker/xml`. You can rename the folder `msh` to xml when moving it. 
+ 
+Once the set up is finished you need to copy the files from the initial airfoil docker and place them in directory `kanelbulle/this_should_work/docker_comp/murtazo_worker/xml`. This can be achieved by using the following commands when standing in the `kanelbulle`-directory using commands:
+``` $ sudo docker cp airfoil_container:home/fenics/shared/murtazo/cloudnaca/msh this_should_work/docker_comp/murtazo_worker
+    $ sudo docker cp airfoil_container:home/fenics/shared/murtazo/cloudnaca/msh this_should_work/docker_comp/flask_app
+```
+
 
 ## Starting application service
 Before starting run below to make sure you access the ports.
