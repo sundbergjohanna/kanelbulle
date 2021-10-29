@@ -15,7 +15,23 @@ Please have patience when setting up the VM! This will take time! The cloud cfg 
  #./runme.sh 0 30 10 200 1`
 Once the set up is finished you need to copy the files from the initial airfoil docker and place them in directory `kanelbulle/this_should_work/docker_comp/murtazo_worker/xml`. You can rename the folder `msh` to xml when moving it. 
 
-## Starting docke compose
+## Starting application service
+Before starting run below to make sure you access the ports.
+```
+$ sudo lsof -i tcp:5672
+$ sudo kill -9 <pid id>
+```
+
+cd into `kanelbulle/this_should_work/docker_comp/`
+
+
+
+same procedure if you began by enetring. **$docker-compose up --build **
+but instead of $docker-compose up -d --build
+$docker-compose up -d --build , use.
+docker-compose up -d --build --force-recreate
+
+
 bla bla inline code: `docker-compose up`
 
 
