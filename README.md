@@ -15,8 +15,9 @@ Please have patience when setting up the VM! This will take time! The cloud cfg 
  #./runme.sh 0 30 10 200 1`
  
 Once the set up is finished you need to copy the files from the initial airfoil docker and place them in directory `kanelbulle/this_should_work/docker_comp/murtazo_worker/xml`. This can be achieved by using the following commands when standing in the `kanelbulle`-directory using commands:
-``` $ sudo docker cp airfoil_container:home/fenics/shared/murtazo/cloudnaca/msh this_should_work/docker_comp/murtazo_worker
-    $ sudo docker cp airfoil_container:home/fenics/shared/murtazo/cloudnaca/msh this_should_work/docker_comp/flask_app
+``` 
+$ sudo docker cp airfoil_container:home/fenics/shared/murtazo/cloudnaca/msh this_should_work/docker_comp/murtazo_worker
+$ sudo docker cp airfoil_container:home/fenics/shared/murtazo/cloudnaca/msh this_should_work/docker_comp/flask_app
 ```
 
 
