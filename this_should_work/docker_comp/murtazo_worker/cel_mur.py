@@ -8,7 +8,8 @@ app = Celery('cel_mur',
 
 @app.task(name='cel_mur.calculate')
 def calculate(xmlfile):
-    os.system('./navier_stokes_solver/airfoil 5 1 5. 1 '+'./' +xmlfile)
+    #os.system('./navier_stokes_solver/airfoil 5 1 5. 1 '+'./' +xmlfile)
+    os.system('./navier_stokes_solver/airfoil 10 0.0001 10. 2 '+'./' +xmlfile)
     os.chdir("results")
     #file = open("drag_ligt.m", "r")
     #string = file.readline()
