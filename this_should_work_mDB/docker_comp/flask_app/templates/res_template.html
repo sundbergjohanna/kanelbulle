@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <font face = "Helvetica">
+
+    <body>
+        <h1> <center> Airfoil as a Service </center> </h1>
+        <h2> Results </h2>
+        <hr />
+    <body>
+
+    <body>
+        <a href="clear"> Click here to clear database. </a>
+        <h4>Number of saved result files: {{count}}</h4>
+        {% for item in data %}
+            <h4 style="padding: 10px; border: 2px solid grey;">{{item['mesh_file']}}</h4>
+            <p> <strong>Time: </strong> {{ item['% time']}}</p>
+            <p> <strong>Lift: </strong> {{ item['lift']}}</p>
+            <p> <strong>Drag: </strong> {{ item['drag\n']}}</p>
+            <hr />
+        {% endfor %}
+    <body>
+<html>
