@@ -1,4 +1,0 @@
-Flask
-celery
-pymongo
-Flask-PyMongo
