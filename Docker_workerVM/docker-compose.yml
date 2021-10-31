@@ -1,0 +1,7 @@
+version: '3'
+services:
+
+# --------  Worker [1]  -------- #
+  worker_1:
+    build: './murtazo_worker'
+    user: root
