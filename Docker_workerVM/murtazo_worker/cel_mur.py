@@ -5,7 +5,7 @@ import shutil
 import json
 
 app = Celery('cel_mur',
-             broker='amqp://admin:admin@rabbit:5672',
+             broker='amqp://admin:admin@192.168.2.39:5672',
              backend='rpc://')
 
 @app.task(name='cel_mur.calculate')
@@ -36,7 +36,7 @@ def calculate(xmlfile):
 
     res = {"mesh_file": xmlfile, keys[0]: time, keys[1]: lift, keys[2]: drag}
     # ---- MongoDB ---- #
-    client = MongoClient('mongodb://m_admin:m_admin@mongo:27017')
+    client = MongoClient('mongodb://m_admin:m_admin@192.168.2.39:27017')
     with client:
         db = client.db
         db.res.insert(res)
