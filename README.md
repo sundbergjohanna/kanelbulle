@@ -39,3 +39,17 @@ starts the service with N workers
 Go into a web browser and run(obs number of files < N number of workes)
 `http://<floating-ip>:5000/murtazo/<number of files>`
 
+
+
+
+
+
+
+###TODO LIST INNAN VI ÄR KLARA:
+- Heat code
+- Om xml redan körts ska den ta gamla resultatet
+- Rensa upp lite i githubben
+- Skriv instruktioner för hur man startar upp och kör allt
+- Rapport: Reusltat
+           Metod
+
