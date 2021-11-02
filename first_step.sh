@@ -23,3 +23,5 @@ sudo docker cp murtazo airfoil_container:/home/fenics/shared/.
 sudo docker cp second_step.sh airfoil_container:/home/fenics/shared/.
 sudo docker exec airfoil_container bash -c "./second_step.sh"
 echo "*Executing second script "
+sudo docker cp airfoil_container:home/fenics/shared/murtazo/cloudnaca/msh this_should_work/docker_comp/murtazo_worker
+sudo docker cp airfoil_container:home/fenics/shared/murtazo/cloudnaca/msh this_should_work/docker_comp/flask_app
