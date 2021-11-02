@@ -1,20 +1,43 @@
 from celery import Celery
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from celery.execute import send_task
 from pymongo import MongoClient
 from bson import json_util
 import json
+from requests import get
+import os
 
 app = Flask(__name__)
 simple_app = Celery('worker',
                     broker='amqp://admin:admin@rabbit:5672',
                     backend='rpc://')
 
-# ---- Flask Test ---- #
-@app.route('/flasktest/<name>')
-def proc(name):
-    return name
+@app.route("/home")
+def home():
+    return render_template("temp2.html")
 
+@app.route('/home', methods=['POST'])
+def home_post():
+    text = request.form['text']
+    num_of_files = text.upper()
+    #return processed_text
+
+    mesh_file_list = []
+    temp_res = []
+    result = []
+    for subdir, dirs, files in os.walk('../murtazo_worker/xmls'):  # name of folder containing xml files
+       for file in files:
+           #filepath = subdir + os.sep + file
+           mesh_file_list.append(file)
+
+           if len(mesh_file_list) == num_of_files:
+               break
+
+    for arg in mesh_file_list:
+       simple_app.send_task('cel_mur.calculate', [arg])
+
+
+    return redirect(url_for('home'))
 
 # ---- Airfoil: worker ---- #
 @app.route('/murtazo')
@@ -46,3 +69,9 @@ def clear():
         db = client.db
         db.res.remove({})
     return redirect(url_for('res'))
+
+# Flower
+@app.route("/flower")
+def flower():
+    ip = get('https://api.ipify.org').content.decode('utf8')
+    return redirect("http://" + ip + ":8888", code=302)
