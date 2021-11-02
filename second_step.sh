@@ -30,10 +30,8 @@ cd ..
 cd ..
 chmod +x convert_xml.sh
 ./convert_xml.sh
-sudo docker stop
-sudo docker cp airfoil_container:home/fenics/shared/murtazo/cloudnaca/msh this_should_work/docker_comp/murtazo_worker
-sudo docker cp airfoil_container:home/fenics/shared/murtazo/cloudnaca/msh this_should_work/docker_comp/flask_app
 echo "*FINISHED"
+exit
 #sudo exec third_step.sh
 #cd msfla
 #dolfin-convert r0a0n200.msh r0a0n200.xml
