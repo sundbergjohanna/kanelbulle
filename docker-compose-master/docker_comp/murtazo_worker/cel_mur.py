@@ -11,7 +11,7 @@ app = Celery('cel_mur',
 @app.task(name='cel_mur.calculate')
 def calculate(xmlfile):
     # ---- Run airfoil inside container ---- #
-    os.system('./navier_stokes_solver/airfoil 5 1 5. 1 '+'./' +xmlfile)
+    os.system('./navier_stokes_solver/airfoil 5 1 5. 1 '+'./xmls/' +xmlfile)
     os.chdir("results")
 
     with open("drag_ligt.m", "r") as file:
