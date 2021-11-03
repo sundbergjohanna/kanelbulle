@@ -1,5 +1,5 @@
 # Airfoil as a Service
-The airfoil project is made to work as a cloud service using celery workers, RabbitMQ as the broker, Flask as the application.
+The airfoil project is made to work as a cloud service using celery workers, RabbitMQ as the broker, Flask as the application. The results are stored in a MongoDB database.
 
 <div style="text-align:center"><img src="sys.jpg" alt="workflow" width=45% /></div>
 
