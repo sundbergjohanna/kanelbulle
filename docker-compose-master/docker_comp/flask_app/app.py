@@ -20,18 +20,23 @@ def home():
 def home_post():
     text = request.form['text']
     num_of_files = text.upper()
-    #return processed_text
-
+ 
     mesh_file_list = []
-    temp_res = []
-    result = []
-    for subdir, dirs, files in os.walk('../murtazo_worker/xmls'):  # name of folder containing xml files
-       for file in files:
-           #filepath = subdir + os.sep + file
-           mesh_file_list.append(file)
+    folder = os.listdir('./xmls')
+    for file in folder:
+        if len(mesh_file_list) < int(num_of_files):
+            mesh_file_list.append(file)
 
-           if len(mesh_file_list) == num_of_files:
-               break
+    #mesh_file_list = []
+    #temp_res = []
+    #result = []
+    #for subdir, dirs, files in os.walk('../murtazo_worker/xmls'):  # name of folder containing xml files
+    #   for file in files:
+    #       #filepath = subdir + os.sep + file
+    #       mesh_file_list.append(file)
+
+    #       if len(mesh_file_list) == num_of_files:
+     #          break
 
     for arg in mesh_file_list:
        simple_app.send_task('cel_mur.calculate', [arg])
