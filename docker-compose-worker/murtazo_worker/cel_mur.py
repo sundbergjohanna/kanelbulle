@@ -5,7 +5,7 @@ import shutil
 import json
 
 app = Celery('cel_mur',
-             broker='amqp://admin:admin@10.10.10.10:5672',
+             broker='amqp://admin:admin@10.10.10.35:5672',
              backend='rpc://')
 
 @app.task(name='cel_mur.calculate')
