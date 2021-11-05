@@ -7,6 +7,6 @@ services:
     user: root
     
 # --------  Worker [2]  -------- #
-  worker_2:
-    build: './murtazo_worker'
-    user: root
+#  worker_2:
+#    build: './murtazo_worker'
+#    user: root
