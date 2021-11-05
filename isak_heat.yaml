@@ -1,0 +1,118 @@
+heat_template_version: 2013-05-23
+
+
+# --------------------- Parameters ---------------------- #
+# Image, flavor, key, public_network
+parameters:
+  image:
+    type: string
+    default: 0b7f5fb5-a25c-48b6-8578-06dbfa160723
+  flavor:
+    type: string
+    default: ssc.medium.highmem
+  key:
+    type: string
+    default: isak_airfoil_key
+  public_network:
+    type: string
+    default: Public External IPv4 Network
+  fixed-ip:
+    type: string
+    default: 10.10.10.10
+
+# --------------------- Resources ---------------------- #
+resources:
+
+  private_network:
+    type: OS::Neutron::Net
+
+  private_subnet:
+    type: OS::Neutron::Subnet
+    properties:
+      network_id: { get_resource: private_network }
+      cidr: 10.10.10.0/24
+
+  router:
+    type: OS::Neutron::Router
+    properties:
+      external_gateway_info:
+        network: { get_param: public_network }
+
+  router-interface:
+    type: OS::Neutron::RouterInterface
+    properties:
+      router_id: { get_resource: router }
+      subnet: { get_resource: private_subnet }
+
+  myVM_port1:
+    type: OS::Neutron::Port
+    properties:
+      name: "myVM_port1"
+      network: { get_resource: private_network }
+      fixed_ips: [{"subnet": { get_resource: private_subnet }, "ip_address": { get_param: fixed-ip } }]
+      security_groups:
+        - isak-sec-group
+
+  # Boot Cloud init script
+  boot_cloud:
+    type: OS::Heat::CloudConfig
+    properties:
+        cloud_config:
+            apt_update: true
+            apt_upgrade: false
+            packages:
+              - rabbitmq-server
+              - docker-compose
+            byobu_default: system
+            runcmd:
+              - echo "Hello world"
+              - cd /home
+              - sudo chown ubuntu:ubuntu ubuntu
+              - cd /home/ubuntu
+              - git clone https://github.com/sundbergjohanna/kanelbulle.git
+              - sudo chown ubuntu:ubuntu kanelbulle/
+              - cd kanelbulle/
+              - chmod +x first_step.sh
+              - chmod +x second_step.sh
+              - ./first_step.sh
+              - cd docker_compose_master
+              - sudo chmod +x setup_admin.sh
+              - ./setup_admin.sh
+            bootcmd:
+              - echo "Boot Completed"
+
+              
+  isak-master: # Test server
+    type: OS::Nova::Server
+    properties:
+      name: "isak-master"
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      key_name: { get_param: key }
+      networks:
+        - port: { get_resource: myVM_port1 }
+      admin_user: ubuntu
+      user_data_format: RAW
+      user_data: {get_resource: boot_cloud}
+
+
+  floating_ip:
+    type: OS::Neutron::FloatingIP
+    properties:
+      floating_network: { get_param: public_network }
+
+  floating_ip_assoc:
+    type: OS::Neutron::FloatingIPAssociation
+    properties:
+      floatingip_id: { get_resource: floating_ip }
+      port_id: { get_resource: myVM_port1 }
+
+# --------------------- Output ---------------------- #
+outputs:
+  instance_name:
+    value: { get_attr: [ isak-master, name ] }
+  fixed_ip:
+    value: { get_attr: [ isak-master, first_address ] }
+  public_ip:
+    description: Public IP.
+    value: { get_attr: [ floating_ip, floating_ip_address ] }
