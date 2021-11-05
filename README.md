@@ -18,7 +18,7 @@ Update heat-file `ssc-test-stack.yaml` with your key name and the public part of
 Have key-file and the `ssc-test-stack.yaml` in the same folder and run
 ``` openstack stack create airfoil_stack -f 'yaml' -t ssc-test-stack.yaml```
 
-Please have patience when setting up the VM! This will take time! Both heat and cloudinit installs necessary packages on the VM and deploys a docker with the airfoil application to run the mesh files with below input. If you wish another set of mesh arguments edit this in `second_step.sh` shell script.
+Please have patience when setting up the VM! Wait for at least 20 minutes after the HOT has been deployed. Both heat and cloudinit installs necessary packages on the VM and deploys a docker with the airfoil application to run the mesh files with below input. If you wish another set of mesh arguments edit this in `second_step.sh` shell script.
 `#ARGUMENTS to runme.sh <angle.start> <angle.stop> <no.of.angles> <no.of.nodes> <no.of.refinement.levels>
  #./runme.sh 0 30 10 200 1`
  
@@ -27,33 +27,22 @@ Once the set up is finished you need to copy the files from the initial airfoil 
 $ sudo docker cp airfoil_container:home/fenics/shared/murtazo/cloudnaca/msh this_should_work/docker_comp/murtazo_worker
 $ sudo docker cp airfoil_container:home/fenics/shared/murtazo/cloudnaca/msh this_should_work/docker_comp/flask_app
 ```
+## Starting up with Heat updated
+On your own terminal source the file from your cloud provider
+```source UPPMAX 2021_1-5-openrc.sh```
 
-## Starting application service
-Log in to master worker.
-Thereafter cd into kanelbulle and run the following commands to move the xml files to the required locations.
-```
-sudo docker cp airfoil_container:home/fenics/shared/murtazo/cloudnaca/msh docker-compose-master/docker_comp/murtazo_worker/xmls
-sudo docker cp airfoil_container:home/fenics/shared/murtazo/cloudnaca/msh docker-compose-master/docker_comp/flask_app/xmls
-```
-Before starting upp docker-compose below to make sure you can access the ports.
-```
-$ sudo lsof -i tcp:5672
-$ sudo kill -9 <pid id>
-```
+Update heat-file `ssc-test-stack.yaml` with your key name and the public part of your key.
+Have key-file and the `ssc-test-stack.yaml` in the same folder and run
+``` openstack stack create airfoil_stack -f 'yaml' -t ssc-test-stack.yaml```
 
-cd into `kanelbulle/docker-compose-master/docker_comp/`
-
-``` sudo docker-compose up```
-starts the service
-
-```sudo docker-compose up --scale worker_1=N```
-starts the service with N workers
-
+Please have patience when setting up the VM! Wait for at least 20 minutes after the HOT has been deployed. Both heat and cloudinit installs necessary packages on the VM and deploys a docker with the airfoil application to run the mesh files with below input. If you wish another set of mesh arguments edit this in `second_step.sh` shell script.
+`#ARGUMENTS to runme.sh <angle.start> <angle.stop> <no.of.angles> <no.of.nodes> <no.of.refinement.levels>
+ #./runme.sh 0 30 10 200 1`
 
 
 
 Go into a web browser and run(obs number of files < N number of workes)
-`http://<floating-ip>:5000/murtazo/<number of files>`
+`http://<floating-ip>:5000/home>`
 
 
 
