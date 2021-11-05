@@ -9,7 +9,7 @@ parameters:
     default: 0b7f5fb5-a25c-48b6-8578-06dbfa160723
   flavor:
     type: string
-    default: ssc.medium.highmem
+    default: ssc.xlarge
   key:
     type: string
     default: isak_airfoil_key
@@ -22,39 +22,35 @@ parameters:
 
 # --------------------- Resources ---------------------- #
 resources:
-
   private_network:
     type: OS::Neutron::Net
-
   private_subnet:
     type: OS::Neutron::Subnet
     properties:
       network_id: { get_resource: private_network }
       cidr: 10.10.10.0/24
-
   router:
     type: OS::Neutron::Router
     properties:
       external_gateway_info:
         network: { get_param: public_network }
-
   router-interface:
     type: OS::Neutron::RouterInterface
     properties:
       router_id: { get_resource: router }
       subnet: { get_resource: private_subnet }
 
-  myVM_port1:
+ # --------------- *** Master *** ---------------- #
+  master_port: # PORT
     type: OS::Neutron::Port
     properties:
-      name: "myVM_port1"
+      name: "master_port"
       network: { get_resource: private_network }
       fixed_ips: [{"subnet": { get_resource: private_subnet }, "ip_address": { get_param: fixed-ip } }]
       security_groups:
         - isak-sec-group
 
-  # Boot Cloud init script
-  boot_cloud:
+  master_boot: # BOOT
     type: OS::Heat::CloudConfig
     properties:
         cloud_config:
@@ -75,44 +71,104 @@ resources:
               - chmod +x first_step.sh
               - chmod +x second_step.sh
               - ./first_step.sh
-              - cd docker_compose_master
-              - sudo chmod +x setup_admin.sh
+              - cd docker-compose-master
+              - chmod +x setup_admin.sh
               - ./setup_admin.sh
+              - cd docker_comp
+              - sudo docker-compose up
             bootcmd:
               - echo "Boot Completed"
 
-              
-  isak-master: # Test server
+  master_server: # INSTANCE
     type: OS::Nova::Server
     properties:
-      name: "isak-master"
+      name: "master_server"
       image: { get_param: image }
       flavor: { get_param: flavor }
       key_name: { get_param: key }
       networks:
-        - port: { get_resource: myVM_port1 }
+        - port: { get_resource: master_port }
       admin_user: ubuntu
       user_data_format: RAW
-      user_data: {get_resource: boot_cloud}
+      user_data: {get_resource: master_boot}
 
-
-  floating_ip:
+  floating_ip_MASTER: # PUBLIC IP
     type: OS::Neutron::FloatingIP
     properties:
       floating_network: { get_param: public_network }
 
-  floating_ip_assoc:
+  floating_ip_assoc: # ASSOC IP
     type: OS::Neutron::FloatingIPAssociation
     properties:
-      floatingip_id: { get_resource: floating_ip }
-      port_id: { get_resource: myVM_port1 }
+      floatingip_id: { get_resource: floating_ip_MASTER }
+      port_id: { get_resource: master_port }
+
+# --------------- *** Worker *** ---------------- #
+  worker_port: # PORT
+    type: OS::Neutron::Port
+    properties:
+      name: "worker_port"
+      network: { get_resource: private_network }
+      security_groups:
+        - isak-sec-group
+
+  worker_boot: # BOOT
+    type: OS::Heat::CloudConfig
+    properties:
+        cloud_config:
+            apt_update: true
+            apt_upgrade: false
+            packages:
+              - docker-compose
+            byobu_default: system
+            runcmd:
+              - echo "Hello world"
+              - cd /home
+              - sudo chown ubuntu:ubuntu ubuntu
+              - cd /home/ubuntu
+              - git clone https://github.com/sundbergjohanna/kanelbulle.git
+              - sudo chown ubuntu:ubuntu kanelbulle/
+              - cd kanelbulle/
+              - chmod +x first_step.sh
+              - chmod +x second_step.sh
+              - ./first_step.sh
+              - cd docker-compose-worker
+              - chmod +x setup.sh
+              - ./setup.sh
+              - sudo docker-compose up
+            bootcmd:
+              - echo "Boot Completed"
+
+  worker_server: # INSTANCE
+    type: OS::Nova::Server
+    properties:
+      name: "worker_server"
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      key_name: { get_param: key }
+      networks:
+        - port: { get_resource: worker_port }
+      admin_user: ubuntu
+      user_data_format: RAW
+      user_data: {get_resource: worker_boot}
+
+  floating_ip_WORKER: # PUBLIC IP
+    type: OS::Neutron::FloatingIP
+    properties:
+      floating_network: { get_param: public_network }
+
+  floating_ip_assoc_WORKER: # ASSOC IP
+    type: OS::Neutron::FloatingIPAssociation
+    properties:
+      floatingip_id: { get_resource: floating_ip_WORKER }
+      port_id: { get_resource: worker_port }
 
 # --------------------- Output ---------------------- #
 outputs:
   instance_name:
-    value: { get_attr: [ isak-master, name ] }
+    value: { get_attr: [ master_server, name ] }
   fixed_ip:
-    value: { get_attr: [ isak-master, first_address ] }
+    value: { get_attr: [ master_server, first_address ] }
   public_ip:
     description: Public IP.
-    value: { get_attr: [ floating_ip, floating_ip_address ] }
+    value: { get_attr: [ floating_ip_MASTER, floating_ip_address ] }
