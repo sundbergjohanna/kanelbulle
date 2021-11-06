@@ -4,13 +4,13 @@ import shutil
 import json
 
 app = Celery('cel_mur',
-             broker='amqp://admin:admin@10.10.10.45:5672',
+             broker='amqp://admin:admin@10.10.10.10:5672',
              backend='rpc://')
 
 @app.task(name='cel_mur.calculate')
 def calculate(xmlfile):
     # MongoDB client connection
-    client = MongoClient('mongodb://m_admin:m_admin@10.10.10.45:27017')
+    client = MongoClient('mongodb://m_admin:m_admin@10.10.10.10:27017')
     with client: # Check if result already exists
         db = client.db
         search = db.res.find({'mesh_file': xmlfile}, {"mesh_file" : 1}).limit(1)
