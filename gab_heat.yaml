@@ -12,7 +12,7 @@ parameters:
     default: ssc.xlarge
   key:
     type: string
-    default: keykey
+    default: <personal key-pair>
   public_network:
     type: string
     default: Public External IPv4 Network
@@ -62,7 +62,7 @@ resources:
             byobu_default: system
             runcmd:
               - echo "Hello world"
-              - echo "AAAAB3NzaC1yc2EAAAADAQABAAABAQDl0RDojW9kL0xjrEhsd6/NRetupPUw4Vi8tvUqeNgysZ1MLvFmL+y9+6FTZRPUtium7igfyhfXEAhVHslQXHtJsPuJe4fO2zAB/m5fF/XHd8mttclKwOIoBBXIu2EQTcYc6b2MTFDtWuUM2ze+SZ7/3RXQ9ISyML7zohdF2kyKDnTSw34EjD4aAOWgZ1dQb1GpoMwvsANDVi7AY7vQ/Bh+/z7bnj/a/fftmvEpkGYG5K9yC+oma7EHz4aKvRdSnxSL+ufx6SY1edGqk2gp+bYLAt8xXGC9w1xT41/+47EPfROILsYUyWfAkKtDBirXolGxjCDnpdcm2osWvzkdLbeD" >> /home/ubuntu/.ssh/authorized_keys
+              - echo "<public key>" >> /home/ubuntu/.ssh/authorized_keys
               - cd /home
               - sudo chown ubuntu:ubuntu ubuntu
               - cd /home/ubuntu
