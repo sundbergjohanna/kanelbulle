@@ -9,4 +9,4 @@ RUN pip3 install pymongo
 ADD . /murtazo_worker/
 WORKDIR /murtazo_worker/
 RUN chmod 755 ./navier_stokes_solver/airfoil
-ENTRYPOINT celery -A cel_mur worker --loglevel=info
+ENTRYPOINT celery -A cel_mur worker --loglevel=INFO --concurrency=1 -Ofair
