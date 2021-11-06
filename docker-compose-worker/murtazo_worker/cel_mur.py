@@ -1,3 +1,4 @@
+from celery import Celery
 from pymongo import MongoClient
 import os
 import shutil
