@@ -1,0 +1,240 @@
+heat_template_version: 2013-05-23
+
+
+# --------------------- Parameters ---------------------- #
+# Image, flavor, key, public_network
+parameters:
+  image:
+    type: string
+    default: 0b7f5fb5-a25c-48b6-8578-06dbfa160723
+  flavor:
+    type: string
+    default: ssc.xlarge
+  key:
+    type: string
+    default: keykey
+  public_network:
+    type: string
+    default: Public External IPv4 Network
+  fixed-ip:
+    type: string
+    default: 10.10.10.10
+
+# --------------------- Resources ---------------------- #
+resources:
+  private_network:
+    type: OS::Neutron::Net
+  private_subnet:
+    type: OS::Neutron::Subnet
+    properties:
+      network_id: { get_resource: private_network }
+      cidr: 10.10.10.0/24
+  router:
+    type: OS::Neutron::Router
+    properties:
+      external_gateway_info:
+        network: { get_param: public_network }
+  router-interface:
+    type: OS::Neutron::RouterInterface
+    properties:
+      router_id: { get_resource: router }
+      subnet: { get_resource: private_subnet }
+
+ # --------------- *** Master *** ---------------- #
+  master_port: # PORT
+    type: OS::Neutron::Port
+    properties:
+      name: "master_port"
+      network: { get_resource: private_network }
+      fixed_ips: [{"subnet": { get_resource: private_subnet }, "ip_address": { get_param: fixed-ip } }]
+      security_groups:
+        - isak-sec-group
+
+  master_boot: # BOOT
+    type: OS::Heat::CloudConfig
+    properties:
+        cloud_config:
+            apt_update: true
+            apt_upgrade: false
+            packages:
+              - rabbitmq-server
+              - docker-compose
+            byobu_default: system
+            runcmd:
+              - echo "Hello world"
+              - echo "AAAAB3NzaC1yc2EAAAADAQABAAABAQDl0RDojW9kL0xjrEhsd6/NRetupPUw4Vi8tvUqeNgysZ1MLvFmL+y9+6FTZRPUtium7igfyhfXEAhVHslQXHtJsPuJe4fO2zAB/m5fF/XHd8mttclKwOIoBBXIu2EQTcYc6b2MTFDtWuUM2ze+SZ7/3RXQ9ISyML7zohdF2kyKDnTSw34EjD4aAOWgZ1dQb1GpoMwvsANDVi7AY7vQ/Bh+/z7bnj/a/fftmvEpkGYG5K9yC+oma7EHz4aKvRdSnxSL+ufx6SY1edGqk2gp+bYLAt8xXGC9w1xT41/+47EPfROILsYUyWfAkKtDBirXolGxjCDnpdcm2osWvzkdLbeD" >> /home/ubuntu/.ssh/authorized_keys
+              - cd /home
+              - sudo chown ubuntu:ubuntu ubuntu
+              - cd /home/ubuntu
+              - git clone https://github.com/sundbergjohanna/kanelbulle.git
+              - sudo chown ubuntu:ubuntu kanelbulle/
+              - cd kanelbulle/
+              - chmod +x first_step.sh
+              - chmod +x second_step.sh
+              - ./first_step.sh
+              - cd docker-compose-master
+              - chmod +x setup_admin.sh
+              - ./setup_admin.sh
+              - cd docker_comp
+              - sudo docker-compose up
+            bootcmd:
+              - echo "Boot Completed"
+
+  master_server: # INSTANCE
+    type: OS::Nova::Server
+    properties:
+      name: "master_server_gab"
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      key_name: { get_param: key }
+      networks:
+        - port: { get_resource: master_port }
+      admin_user: ubuntu
+      user_data_format: RAW
+      user_data: {get_resource: master_boot}
+
+  floating_ip_MASTER: # PUBLIC IP
+    type: OS::Neutron::FloatingIP
+    properties:
+      floating_network: { get_param: public_network }
+
+  floating_ip_assoc: # ASSOC IP
+    type: OS::Neutron::FloatingIPAssociation
+    properties:
+      floatingip_id: { get_resource: floating_ip_MASTER }
+      port_id: { get_resource: master_port }
+
+
+# --------------- *** Worker I*** ---------------- #
+  workerI_port: # PORT
+    type: OS::Neutron::Port
+    properties:
+      name: "worker_portI"
+      network: { get_resource: private_network }
+      security_groups:
+        - isak-sec-group
+
+  workerI_boot: # BOOT
+    type: OS::Heat::CloudConfig
+    properties:
+        cloud_config:
+            apt_update: true
+            apt_upgrade: false
+            packages:
+              - docker-compose
+            byobu_default: system
+            runcmd:
+              - echo "Hello world"
+              - echo "AAAAB3NzaC1yc2EAAAADAQABAAABAQDl0RDojW9kL0xjrEhsd6/NRetupPUw4Vi8tvUqeNgysZ1MLvFmL+y9+6FTZRPUtium7igfyhfXEAhVHslQXHtJsPuJe4fO2zAB/m5fF/XHd8mttclKwOIoBBXIu2EQTcYc6b2MTFDtWuUM2ze+SZ7/3RXQ9ISyML7zohdF2kyKDnTSw34EjD4aAOWgZ1dQb1GpoMwvsANDVi7AY7vQ/Bh+/z7bnj/a/fftmvEpkGYG5K9yC+oma7EHz4aKvRdSnxSL+ufx6SY1edGqk2gp+bYLAt8xXGC9w1xT41/+47EPfROILsYUyWfAkKtDBirXolGxjCDnpdcm2osWvzkdLbeD" >> /home/ubuntu/.ssh/authorized_keys
+              - cd /home
+              - sudo chown ubuntu:ubuntu ubuntu
+              - cd /home/ubuntu
+              - git clone https://github.com/sundbergjohanna/kanelbulle.git
+              - sudo chown ubuntu:ubuntu kanelbulle/
+              - cd kanelbulle/
+              - chmod +x first_step.sh
+              - chmod +x second_step.sh
+              - ./first_step.sh
+              - cd docker-compose-worker
+              - chmod +x setup.sh
+              - ./setup.sh
+              - sudo docker-compose up
+            bootcmd:
+              - echo "Boot Completed"
+
+  workerI_server: # INSTANCE
+    type: OS::Nova::Server
+    properties:
+      name: "worker_server_I_gab"
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      key_name: { get_param: key }
+      networks:
+        - port: { get_resource: workerI_port }
+      admin_user: ubuntu
+      user_data_format: RAW
+      user_data: {get_resource: workerI_boot}
+
+  floating_ip_WORKERI: # PUBLIC IP
+    type: OS::Neutron::FloatingIP
+    properties:
+      floating_network: { get_param: public_network }
+
+  floating_ip_assoc_WORKERI: # ASSOC IP
+    type: OS::Neutron::FloatingIPAssociation
+    properties:
+      floatingip_id: { get_resource: floating_ip_WORKERI }
+      port_id: { get_resource: workerI_port }
+
+
+# --------------- *** Worker II*** ---------------- #
+  workerII_port: # PORT
+    type: OS::Neutron::Port
+    properties:
+      name: "worker_portII"
+      network: { get_resource: private_network }
+      security_groups:
+        - isak-sec-group
+
+  workerII_boot: # BOOT
+    type: OS::Heat::CloudConfig
+    properties:
+        cloud_config:
+            apt_update: true
+            apt_upgrade: false
+            packages:
+              - docker-compose
+            byobu_default: system
+            runcmd:
+              - echo "Hello world"
+              - echo "AAAAB3NzaC1yc2EAAAADAQABAAABAQDl0RDojW9kL0xjrEhsd6/NRetupPUw4Vi8tvUqeNgysZ1MLvFmL+y9+6FTZRPUtium7igfyhfXEAhVHslQXHtJsPuJe4fO2zAB/m5fF/XHd8mttclKwOIoBBXIu2EQTcYc6b2MTFDtWuUM2ze+SZ7/3RXQ9ISyML7zohdF2kyKDnTSw34EjD4aAOWgZ1dQb1GpoMwvsANDVi7AY7vQ/Bh+/z7bnj/a/fftmvEpkGYG5K9yC+oma7EHz4aKvRdSnxSL+ufx6SY1edGqk2gp+bYLAt8xXGC9w1xT41/+47EPfROILsYUyWfAkKtDBirXolGxjCDnpdcm2osWvzkdLbeD" >> /home/ubuntu/.ssh/authorized_keys
+              - cd /home
+              - sudo chown ubuntu:ubuntu ubuntu
+              - cd /home/ubuntu
+              - git clone https://github.com/sundbergjohanna/kanelbulle.git
+              - sudo chown ubuntu:ubuntu kanelbulle/
+              - cd kanelbulle/
+              - chmod +x first_step.sh
+              - chmod +x second_step.sh
+              - ./first_step.sh
+              - cd docker-compose-worker
+              - chmod +x setup.sh
+              - ./setup.sh
+              - sudo docker-compose up
+            bootcmd:
+              - echo "Boot Completed"
+
+  workerII_server: # INSTANCE
+    type: OS::Nova::Server
+    properties:
+      name: "worker_server_II_gab"
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      key_name: { get_param: key }
+      networks:
+        - port: { get_resource: workerII_port }
+      admin_user: ubuntu
+      user_data_format: RAW
+      user_data: {get_resource: workerII_boot}
+
+  floating_ip_WORKERII: # PUBLIC IP
+    type: OS::Neutron::FloatingIP
+    properties:
+      floating_network: { get_param: public_network }
+
+  floating_ip_assoc_WORKERII: # ASSOC IP
+    type: OS::Neutron::FloatingIPAssociation
+    properties:
+      floatingip_id: { get_resource: floating_ip_WORKERII }
+      port_id: { get_resource: workerII_port }
+
+
+# --------------------- Output ---------------------- #
+outputs:
+  instance_name:
+    value: { get_attr: [ master_server, name ] }
+  fixed_ip:
+    value: { get_attr: [ master_server, first_address ] }
+  public_ip:
+    description: Public IP.
+    value: { get_attr: [ floating_ip_MASTER, floating_ip_address ] }
