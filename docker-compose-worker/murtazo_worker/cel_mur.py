@@ -55,16 +55,3 @@ def calculate(xmlfile):
 
         return "Added to database."
 
-
-    res = {"mesh_file": xmlfile, keys[0]: time, keys[1]: lift, keys[2]: drag}
-    # ---- MongoDB ---- #
-    client = MongoClient('mongodb://m_admin:m_admin@10.10.10.10:27017')
-    with client:
-        db = client.db
-        db.res.insert(res)
-
-    # Remove results folder after saving output
-    os.chdir("..")
-    shutil.rmtree("results")
-
-    return "Added to database."
