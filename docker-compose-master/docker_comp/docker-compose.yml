@@ -53,31 +53,31 @@ services:
       - mongoDB
 
 # --------  Worker [2]  -------- #
-  worker_2:
-    build: './murtazo_worker'
-    user: root
-    depends_on:
-      - rabbit
-      - flask_app
-      - mongoDB
+#  worker_2:
+#    build: './murtazo_worker'
+#    user: root
+#    depends_on:
+#      - rabbit
+#      - flask_app
+#      - mongoDB
 
 # --------  Worker [3]  -------- #
-  worker_3:
-    build: './murtazo_worker'
-    user: root
-    depends_on:
-      - rabbit
-      - flask_app
-      - mongoDB
+#  worker_3:
+#    build: './murtazo_worker'
+#    user: root
+#    depends_on:
+#      - rabbit
+#      - flask_app
+#      - mongoDB
       
 # --------  Worker [4]  -------- #
-  worker_4:
-    build: './murtazo_worker'
-    user: root
-    depends_on:
-      - rabbit
-      - flask_app
-      - mongoDB
+#  worker_4:
+#    build: './murtazo_worker'
+#    user: root
+#    depends_on:
+#      - rabbit
+#      - flask_app
+#      - mongoDB
 
 # # --------  Worker [2]   -------- #
 #   worker_2:
