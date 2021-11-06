@@ -10,3 +10,13 @@ services:
   worker_2:
     build: './murtazo_worker'
     user: root
+    
+# --------  Worker [3]  -------- #
+  worker_3:
+    build: './murtazo_worker'
+    user: root    
+    
+# --------  Worker [4]  -------- #
+  worker_4:
+    build: './murtazo_worker'
+    user: root
