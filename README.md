@@ -9,7 +9,7 @@ On your own terminal source the file from your cloud provider
 
 Update heat-file `ssc-heat.yaml` with your key name and the public part of your key.
 Have key-file and the `ssc-heat.yaml` in the same folder and run
-``` openstack stack create airfoil_stack -f 'yaml' -t ssc-heat.yaml```
+``` openstack stack create airfoil_stack -f 'yaml' -t ssc-heat.yaml``` to start up the services.
 
 Please have patience when setting up the VM! Wait for at least 20 minutes after the HOT has been deployed. Both heat and cloudinit installs necessary packages on the VM and deploys a docker with the airfoil application to run the mesh files with below input. If you wish another set of mesh arguments edit this in `second_step.sh` shell script.
 `#ARGUMENTS to runme.sh <angle.start> <angle.stop> <no.of.angles> <no.of.nodes> <no.of.refinement.levels>
