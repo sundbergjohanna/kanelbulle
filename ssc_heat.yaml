@@ -83,7 +83,7 @@ resources:
   master_server: # INSTANCE
     type: OS::Nova::Server
     properties:
-      name: "master_server_gab"
+      name: "master_server"
       image: { get_param: image }
       flavor: { get_param: flavor }
       key_name: { get_param: key }
@@ -145,7 +145,7 @@ resources:
   workerI_server: # INSTANCE
     type: OS::Nova::Server
     properties:
-      name: "worker_server_I_gab"
+      name: "worker_server_I"
       image: { get_param: image }
       flavor: { get_param: flavor }
       key_name: { get_param: key }
@@ -187,7 +187,7 @@ resources:
             byobu_default: system
             runcmd:
               - echo "Hello world"
-              - echo "AAAAB3NzaC1yc2EAAAADAQABAAABAQDl0RDojW9kL0xjrEhsd6/NRetupPUw4Vi8tvUqeNgysZ1MLvFmL+y9+6FTZRPUtium7igfyhfXEAhVHslQXHtJsPuJe4fO2zAB/m5fF/XHd8mttclKwOIoBBXIu2EQTcYc6b2MTFDtWuUM2ze+SZ7/3RXQ9ISyML7zohdF2kyKDnTSw34EjD4aAOWgZ1dQb1GpoMwvsANDVi7AY7vQ/Bh+/z7bnj/a/fftmvEpkGYG5K9yC+oma7EHz4aKvRdSnxSL+ufx6SY1edGqk2gp+bYLAt8xXGC9w1xT41/+47EPfROILsYUyWfAkKtDBirXolGxjCDnpdcm2osWvzkdLbeD" >> /home/ubuntu/.ssh/authorized_keys
+              - echo "<public key>" >> /home/ubuntu/.ssh/authorized_keys
               - cd /home
               - sudo chown ubuntu:ubuntu ubuntu
               - cd /home/ubuntu
@@ -207,7 +207,7 @@ resources:
   workerII_server: # INSTANCE
     type: OS::Nova::Server
     properties:
-      name: "worker_server_II_gab"
+      name: "worker_server_II"
       image: { get_param: image }
       flavor: { get_param: flavor }
       key_name: { get_param: key }
