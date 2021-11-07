@@ -14,9 +14,9 @@ Update the `ssc-userdata-instance.py` with your keyfile and flavour of choice. T
 On your own terminal source the file from your cloud provider
 ```source UPPMAX 2021_1-5-openrc.sh```
 
-Update heat-file `ssc-test-stack.yaml` with your key name and the public part of your key.
-Have key-file and the `ssc-test-stack.yaml` in the same folder and run
-``` openstack stack create airfoil_stack -f 'yaml' -t ssc-test-stack.yaml```
+Update heat-file `ssc-heat.yaml` with your key name and the public part of your key.
+Have key-file and the `ssc-heat.yaml` in the same folder and run
+``` openstack stack create <name of stack> -f 'yaml' -t ssc-heat.yaml```
 
 Please have patience when setting up the VM! Wait for at least 20 minutes after the HOT has been deployed. Both heat and cloudinit installs necessary packages on the VM and deploys a docker with the airfoil application to run the mesh files with below input. If you wish another set of mesh arguments edit this in `second_step.sh` shell script.
 `#ARGUMENTS to runme.sh <angle.start> <angle.stop> <no.of.angles> <no.of.nodes> <no.of.refinement.levels>
