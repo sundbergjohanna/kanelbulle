@@ -112,7 +112,7 @@ resources:
       name: "worker_portI"
       network: { get_resource: private_network }
       security_groups:
-        - isak-sec-group
+        - <add security group (including port 27017)>
 
   workerI_boot: # BOOT
     type: OS::Heat::CloudConfig
