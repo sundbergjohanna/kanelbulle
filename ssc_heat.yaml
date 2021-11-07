@@ -227,7 +227,67 @@ resources:
     properties:
       floatingip_id: { get_resource: floating_ip_WORKERII }
       port_id: { get_resource: workerII_port }
+      
+# --------------- *** Worker III*** ---------------- #
+  workerIII_port: # PORT
+    type: OS::Neutron::Port
+    properties:
+      name: "worker_portIII"
+      network: { get_resource: private_network }
+      security_groups:
+        - isak-sec-group
 
+  workerIII_boot: # BOOT
+    type: OS::Heat::CloudConfig
+    properties:
+        cloud_config:
+            apt_update: true
+            apt_upgrade: false
+            packages:
+              - docker-compose
+            byobu_default: system
+            runcmd:
+              - echo "Hello world"
+              - echo "<public key>" >> /home/ubuntu/.ssh/authorized_keys
+              - cd /home
+              - sudo chown ubuntu:ubuntu ubuntu
+              - cd /home/ubuntu
+              - git clone https://github.com/sundbergjohanna/kanelbulle.git
+              - sudo chown ubuntu:ubuntu kanelbulle/
+              - cd kanelbulle/
+              - chmod +x first_step.sh
+              - chmod +x second_step.sh
+              - ./first_step.sh
+              - cd docker-compose-worker
+              - chmod +x setup.sh
+              - ./setup.sh
+              - sudo docker-compose up
+            bootcmd:
+              - echo "Boot Completed"
+
+  workerIII_server: # INSTANCE
+    type: OS::Nova::Server
+    properties:
+      name: "worker_server_III"
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      key_name: { get_param: key }
+      networks:
+        - port: { get_resource: workerIII_port }
+      admin_user: ubuntu
+      user_data_format: RAW
+      user_data: {get_resource: workerIII_boot}
+
+  floating_ip_WORKERIII: # PUBLIC IP
+    type: OS::Neutron::FloatingIP
+    properties:
+      floating_network: { get_param: public_network }
+
+  floating_ip_assoc_WORKERIII: # ASSOC IP
+    type: OS::Neutron::FloatingIPAssociation
+    properties:
+      floatingip_id: { get_resource: floating_ip_WORKERIII }
+      port_id: { get_resource: workerIII_port }
 
 # --------------------- Output ---------------------- #
 outputs:
