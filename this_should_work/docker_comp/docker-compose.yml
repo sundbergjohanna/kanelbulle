@@ -1,0 +1,64 @@
+version: '3'
+services:
+
+# ------  Docker for rabbit server ------ #
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:latest
+    environment: # VHOST credentials
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    ports:
+      - "5672:5672"
+
+# ------  Docker for flask application ------ #
+  flask_app:
+    build: './flask_app'
+    ports:
+      - "5000:5000"
+    depends_on:
+      - rabbit
+
+# ------  Docker for flower server ------ #
+  flower:
+    image: mher/flower:latest # image: mher/flower:0.9.5
+    network_mode: "host"
+    environment:
+      - CELERY_BROKER_URL=pyamqp://admin:admin@localhost:5672
+      - FLOWER_PORT=8888
+    ports:
+      - "8888:8888"
+    depends_on:
+      - rabbit
+
+# ------  MongoDB database ------ #
+  mongoDB:
+    hostname: mongo
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+
+# --------  Worker [1]  -------- #
+  worker_1:
+    build: './murtazo_worker'
+    user: root
+    depends_on:
+      - rabbit
+      - flask_app
+
+# --------  Worker [2]   -------- #
+  worker_2:
+    build: './murtazo_worker'
+    user: root
+    depends_on:
+      - rabbit
+      - flask_app
+
+
+# ------  Docker for worker ------ #
+  test_worker:
+    build: './worker'
+    user: nobody
+    depends_on:
+      - rabbit
+      - flask_app
