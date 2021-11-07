@@ -13,7 +13,7 @@ services:
 
 # ------  Docker for flower server ------ #
   flower:
-    image: mher/flower:latest # image: mher/flower:0.9.5
+    image: mher/flower:0.9.5 # image: mher/flower:0.9.5
     network_mode: "host"
     environment:
       - CELERY_BROKER_URL=pyamqp://admin:admin@rabbit:5672
