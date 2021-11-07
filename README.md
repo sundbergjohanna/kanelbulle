@@ -16,21 +16,5 @@ Please have patience when setting up the VM! Wait for at least 20 minutes after 
  #./runme.sh 0 30 10 200 1`
 
 
-
 Go into a web browser `http://<floating-ip>:5000/home>` and run the number of files wanted(obs number of files < N number of workes).
 Wait a couple of minutes before you enter "Click here to view airfoil results".
-
-
-
-
-
-
-
-###TODO LIST INNAN VI ÄR KLARA:
-- ~~Heat code~~
-- ~~Om xml redan körts ska den ta gamla resultatet~~
-- Rensa upp lite i githubben
-- Skriv instruktioner för hur man startar upp och kör allt
-- Rapport: Reusltat
-           Metod
-
