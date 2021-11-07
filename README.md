@@ -17,8 +17,8 @@ Please have patience when setting up the VM! Wait for at least 20 minutes after 
 
 
 
-Go into a web browser and run(obs number of files < N number of workes)
-`http://<floating-ip>:5000/home>`
+Go into a web browser `http://<floating-ip>:5000/home>` and run the number of files wanted(obs number of files < N number of workes).
+Wait a couple of minutes before you enter "Click here to view airfoil results".
 
 
 
