@@ -16,5 +16,4 @@ Please have patience when setting up the VM! Wait for at least 20 minutes after 
  #./runme.sh 0 30 10 200 1`
 
 
-Go into a web browser `http://<floating-ip>:5000/home>` and run the number of files wanted(number of files < N number of workes).
-Wait a couple of minutes before you enter "Click here to view airfoil results".
+Go into a web browser `http://<floating-ip>:5000/home>` and run the number of files wanted (submit at most 22 files, there are 22 mesh-files crated as default). Use the the floating IP of the master VM containing the Flask service. Wait a couple of minutes before you enter "Click here to view airfoil results".
