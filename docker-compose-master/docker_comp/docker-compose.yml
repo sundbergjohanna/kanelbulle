@@ -16,7 +16,7 @@ services:
     image: mher/flower:0.9.5 # image: mher/flower:0.9.5
     network_mode: "host"
     environment:
-      - CELERY_BROKER_URL=pyamqp://admin:admin@rabbit:5672
+      - CELERY_BROKER_URL=pyamqp://admin:admin@localhost:5672
       - FLOWER_PORT=8888
     ports:
       - "8888:8888"
