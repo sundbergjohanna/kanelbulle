@@ -9,7 +9,7 @@ parameters:
     default: 0b7f5fb5-a25c-48b6-8578-06dbfa160723
   flavor:
     type: string
-    default: ssc.xlarge
+    default: ssc.large
   key:
     type: string
     default: <personal key-pair>
@@ -48,7 +48,7 @@ resources:
       network: { get_resource: private_network }
       fixed_ips: [{"subnet": { get_resource: private_subnet }, "ip_address": { get_param: fixed-ip } }]
       security_groups:
-        - isak-sec-group
+        - Airfoil-G10
 
   master_boot: # BOOT
     type: OS::Heat::CloudConfig
@@ -112,7 +112,7 @@ resources:
       name: "worker_portI"
       network: { get_resource: private_network }
       security_groups:
-        - <add security group (including port 27017)>
+        - Airfoil-G10
 
   workerI_boot: # BOOT
     type: OS::Heat::CloudConfig
@@ -174,7 +174,7 @@ resources:
       name: "worker_portII"
       network: { get_resource: private_network }
       security_groups:
-        - isak-sec-group
+        - Airfoil-G10
 
   workerII_boot: # BOOT
     type: OS::Heat::CloudConfig
@@ -235,7 +235,7 @@ resources:
       name: "worker_portIII"
       network: { get_resource: private_network }
       security_groups:
-        - isak-sec-group
+        - Airfoil-G10
 
   workerIII_boot: # BOOT
     type: OS::Heat::CloudConfig
