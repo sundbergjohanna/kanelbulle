@@ -7,7 +7,7 @@ The airfoil project is made to work as a cloud service using celery workers, Rab
 On your own terminal source the file from your cloud provider
 ```source UPPMAX 2021_1-5-openrc.sh```
 
-Update heat-file `ssc-heat.yaml` with your key name and the public part of your key.
+Update heat-file `ssc-heat.yaml` with your key name <personal key-pair> and the public part of your key <public key>.
 Have key-file and the `ssc-heat.yaml` in the same folder and run
 ``` openstack stack create airfoil_stack -f 'yaml' -t ssc-heat.yaml``` to start up the services.
 
