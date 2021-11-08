@@ -27,34 +27,11 @@ def home_post():
         if len(mesh_file_list) < int(num_of_files):
             mesh_file_list.append(file)
 
-    #mesh_file_list = []
-    #temp_res = []
-    #result = []
-    #for subdir, dirs, files in os.walk('../murtazo_worker/xmls'):  # name of folder containing xml files
-    #   for file in files:
-    #       #filepath = subdir + os.sep + file
-    #       mesh_file_list.append(file)
-
-    #       if len(mesh_file_list) == num_of_files:
-     #          break
-
     for arg in mesh_file_list:
        simple_app.send_task('cel_mur.calculate', [arg])
 
 
     return redirect(url_for('home'))
-
-# ---- Airfoil: worker ---- #
-@app.route('/murtazo')
-def mur_test():
-    #res = test.delay()
-    file = 'r0a0n200.xml'
-    res = simple_app.send_task('cel_mur.calculate', [file])
-    id = res.id
-    #return res.get()
-    #list = res.get()
-    #return render_template("my_template.html", data=list)
-    return res.get()
 
 # ---------------------------- #
 
