@@ -61,7 +61,6 @@ resources:
               - docker-compose
             byobu_default: system
             runcmd:
-              - echo "Hello world"
               - echo "<public key>" >> /home/ubuntu/.ssh/authorized_keys
               - cd /home
               - sudo chown ubuntu:ubuntu ubuntu
@@ -124,7 +123,6 @@ resources:
               - docker-compose
             byobu_default: system
             runcmd:
-              - echo "Hello world"
               - echo "<public key>" >> /home/ubuntu/.ssh/authorized_keys
               - cd /home
               - sudo chown ubuntu:ubuntu ubuntu
@@ -186,7 +184,6 @@ resources:
               - docker-compose
             byobu_default: system
             runcmd:
-              - echo "Hello world"
               - echo "<public key>" >> /home/ubuntu/.ssh/authorized_keys
               - cd /home
               - sudo chown ubuntu:ubuntu ubuntu
@@ -247,7 +244,6 @@ resources:
               - docker-compose
             byobu_default: system
             runcmd:
-              - echo "Hello world"
               - echo "<public key>" >> /home/ubuntu/.ssh/authorized_keys
               - cd /home
               - sudo chown ubuntu:ubuntu ubuntu
